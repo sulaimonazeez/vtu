@@ -105,7 +105,7 @@ const Header = () => {
     };
 
     checkTokenAndFetch();
-  }, []); // ✅ Empty dependency array ensures it runs only once
+  }, [navigate]); // ✅ Empty dependency array ensures it runs only once
 
   return (
     <div className="container-fluids">
