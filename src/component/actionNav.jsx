@@ -3,10 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 const Actions = () => {
     const navigate = useNavigate();
-
-    const Navigators = (link) => {
-      navigate(link)
-    }
     
     return(
         <section className="quick-action">
