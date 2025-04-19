@@ -148,14 +148,14 @@ const Header = () => {
       </section>
 
       <section className="marque">
-        <marquee className="inner-marque">
+        <div className="inner-marque">
           <div className="marque-flex">
             <div className="inner-flex">
               <small>Get Airtime at 1% off</small>
               <a href="/airtime" className="airtime-btn">Buy Now</a>
             </div>
           </div>
-        </marquee>
+        </div>
       </section>
 
       <Actions />
