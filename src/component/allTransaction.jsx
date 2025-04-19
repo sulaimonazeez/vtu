@@ -94,7 +94,7 @@ const AllTransaction = () => {
             setFilteredHistory(history);
         }
 
-    }, [searchQuery, navigate]); // Remove history from the dependency array
+    }, [searchQuery, navigate, history]); // Remove history from the dependency array
 
     return (
         <section className="parent-container" itemScope itemType="https://schema.org/ItemList">
