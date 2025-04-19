@@ -23,12 +23,7 @@ const Login = () => {
         }
     }, [navigate]);
 
-    const isTokenExpired = () => {
-        const expiresIn = localStorage.getItem("expires_in");
-        if (!expiresIn) return true; // If there's no expiry time, assume the token is expired
 
-        return Date.now() > expiresIn; // Token expired if current time is greater than expiry time
-    };
 
     const handleLogin = async (e) => {
         e.preventDefault();
