@@ -23,7 +23,7 @@ const BuyDataForm = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch("http://127.0.0.1:8000/api/network/")
+        fetch("https://paystar.com.ng/api/network/")
             .then(response => response.json())
             .then(data => setNetworkData(data))
             .catch(error => console.error("Error fetching data:", error));
