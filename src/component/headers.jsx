@@ -112,7 +112,7 @@ const Header = () => {
      <div className="container">
          <div className="topbar">
       <div className="profile">
-        <img style={{width: "30px", height: "35px", borderRadius: "50%"}} src="https://paystar.com.ng/static/download.01b70cfb472f.png" alt="User" className="avatar profile-image" />
+        <img style={{width: "35px", height: "35px", borderRadius: "50%"}} src="https://paystar.com.ng/static/download.01b70cfb472f.png" alt="User" className="avatar profile-image" />
         <span>Good Day, {profile?.first_name || "User"}</span>
       </div>
       <i className="fas fa-bell notification-icon"></i>
