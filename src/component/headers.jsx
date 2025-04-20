@@ -117,7 +117,7 @@ const Header = () => {
       </div>
       <i className="fas fa-bell notification-icon"></i>
     </div><br/><br /><br />
-    <!-- Balance Card -->
+    
     <div className="balance-card">
       <h2>Wallet Balance</h2>
       <p>₦{ balance.balance }</p>
@@ -128,7 +128,6 @@ const Header = () => {
         </div>
     </div>
 
-    <!-- Service Cards -->
     <div className="services">
       <div onClick={ () => navigate("/airtime")} className="service-box" id="airtime">
         <i className="fas fa-phone-volume"></i>
@@ -157,7 +156,6 @@ const Header = () => {
     </div>
   </div>
 
-  <!-- Bottom Navigation -->
   <div className="bottom-nav">
     <a href="/home" className="active">
       <i className="fas fa-home"></i>
