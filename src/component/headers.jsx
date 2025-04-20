@@ -109,7 +109,7 @@ const Header = () => {
 
   return (
    <div>
-     <div className="container mb-5">
+     <div className="container">
          <div className="topbar">
       <div className="profile">
         <img style={{width: "35px", height: "35px", borderRadius: "50%"}} src="https://paystar.com.ng/static/download.01b70cfb472f.png" alt="User" className="avatar profile-image" />
