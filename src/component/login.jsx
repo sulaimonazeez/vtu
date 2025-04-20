@@ -10,7 +10,7 @@ const Login = () => {
     const [error, setError] = useState("");
     const [remember, setRemember] = useState(false);
     const navigate = useNavigate();
-    const API_URL = "https:/paystar.com.ng/api/login/";
+    const API_URL = "https://paystar.com.ng/api/login/";
 
     // Check if the user is already authenticated (i.e., has a valid access token)
     useEffect(() => {
