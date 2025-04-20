@@ -129,7 +129,7 @@ body {
 .avatar {
   width: 1rem;
   height: 1rem;
-  border-radius: 50%;
+  border-radius: 50vw;
 }
 
 .notification-icon {
