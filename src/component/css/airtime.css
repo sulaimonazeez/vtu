@@ -104,7 +104,23 @@
     text-align: center;
     cursor: pointer;
 }
+network-icons {
+            display: flex;
+            justify-content: space-evenly;
+        }
+        .network-icons img {
+            width: 18%;
+            max-width: 70px;
+            height: auto;
+            border-radius: 10px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
 
+        .network-icons img:hover {
+            border-color: #007bff;
+        }
 .status--done {
     background-color: red;
     padding: 1rem;
