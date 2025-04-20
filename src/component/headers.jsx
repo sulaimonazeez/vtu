@@ -112,7 +112,7 @@ const Header = () => {
      <div className="container">
          <div className="topbar">
       <div className="profile">
-        <img style={{width: "29px", height: "35px", borderRadius: "50%"}} src="https://paystar.com.ng/static/download.01b70cfb472f.png" alt="User" className="avatar profile-image" />
+        <img style={{width: "30px", height: "35px", borderRadius: "50%"}} src="https://paystar.com.ng/static/download.01b70cfb472f.png" alt="User" className="avatar profile-image" />
         <span>Good Day, {profile?.first_name || "User"}</span>
       </div>
       <i className="fas fa-bell notification-icon"></i>
@@ -120,7 +120,7 @@ const Header = () => {
     
     <div className="balance-card">
       <h2>Wallet Balance</h2>
-      <p>₦{ balance || 0 }</p>
+      <p>₦{balance || 0}</p>
         <div>
           <span><small>9Payment Service Bank || </small></span>
           <span id="accs"><strong><small>5458657957</small></strong></span>
