@@ -73,7 +73,7 @@ const Header = () => {
       try {
         const refreshToken = localStorage.getItem("refresh_token");
 
-        const res = await axios.post("http://localhost:8000/api/token/refresh/", {
+        const res = await axios.post("https://paystar.com.ng/api/token/refresh/", {
           refresh: refreshToken,
         });
 
