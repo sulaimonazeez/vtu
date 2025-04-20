@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./css/home.css";
+import "./dashed.css";
 import Actions from "./actionNav";
 import axiosInstance from "./utility";
 import { useNavigate } from "react-router-dom";
@@ -108,59 +108,74 @@ const Header = () => {
   }, [navigate]); // ✅ Empty dependency array ensures it runs only once
 
   return (
-    <div className="container-fluids">
-      <header>
-        <div className="profile">
-          <img className="profile-image" alt="Profile" src="https://paystar.com.ng/static/download.png" />
+   <div>
+     <div className="container">
+         <div className="topbar">
+      <div className="profile">
+        <img src="https://paystar.com.ng/static/download.01b70cfb472f.png" alt="User" className="avatar profile-image" />
+        <span>Good Day, {profile.first_name}</span>
+      </div>
+      <i className="fas fa-bell notification-icon"></i>
+    </div><br/><br /><br />
+    <!-- Balance Card -->
+    <div className="balance-card">
+      <h2>Wallet Balance</h2>
+      <p>₦{ balance.balance }</p>
+        <div>
+          <span><small>9Payment Service Bank || </small></span>
+          <span id="accs"><strong><small>5458657957</small></strong></span>
+           <i className="fa fa-clone" aria-hidden="true"></i>
         </div>
-        <div className="notifications" id="notify">
-          <i className="fa fa-bell-o"></i>
-        </div>
-      </header>
+    </div>
 
-      <section className="board-panel">
-        <div className="bord-greeting">
-          <div><p><strong>Good Day, {profile?.first_name || "User"}</strong></p></div>
-          <div className="select">
-            <select>
-              <option value="NG">NG</option>
-            </select>
-          </div>
-        </div>
+    <!-- Service Cards -->
+    <div className="services">
+      <div className="service-box" id="airtime">
+        <i className="fas fa-phone-volume"></i>
+        <span>Airtime</span>
+      </div>
+      <div className="service-box" id="data">
+        <i className="fas fa-wifi"></i>
+        <span>Data</span>
+      </div>
+      <div className="service-box" id="electric">
+        <i className="fas fa-bolt"></i>
+        <span>Electricity</span>
+      </div>
+      <div className="service-box" id="#refferal">
+        <i className="fas fa-receipt"></i>
+        <span>Utility Bills</span>
+      </div>
+      <div className="service-box">
+        <i className="fas fa-user-friends"></i>
+        <span> Referral</span>
+      </div>
+      <div className="service-box">
+        <i className="fas fa-graduation-cap"></i>
+        <span>Education</span>
+      </div>
+    </div>
+  </div>
 
-        <div className="cpu-board">
-          <div className="make-inline">
-            <div>
-              <small>Wallet Balance <i className="fa fa-eye"></i></small>
-              <h3 className="blc"><strong>NGN {balance} </strong></h3>
-            </div>
-            <div className="make-plus">
-              <div className="plus"><i className="mt-2 fa fa-plus"></i></div>
-              <small className="blc-text"><strong>Add Money</strong></small>
-            </div>
-          </div>
-        </div>
-
-        <div className="account-grid">
-          <p id="accs">9payment Service - 5074563753</p>
-          <i className="fa fa-clone" aria-hidden="true"></i>
-        </div>
-      </section>
-
-      <section className="marque">
-        <div className="inner-marque">
-          <div className="marque-flex">
-            <div className="inner-flex">
-              <small>Get Airtime at 1% off</small>
-              <a href="/airtime" className="airtime-btn">Buy Now</a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <Actions />
-      <Transaction />
-      <DownNav />
+  <!-- Bottom Navigation -->
+  <div className="bottom-nav">
+    <a href="/home" className="active">
+      <i className="fas fa-home"></i>
+      Home
+    </a>
+    <a href="/history">
+      <i className="fas fa-list-alt"></i>
+      History
+    </a>
+    <a href="/notification">
+      <i className="fas fa-bell"></i>
+      Notification
+    </a>
+    <a href="/logout">
+      <i className="fas fa-sign-out-alt"></i>
+      Logout
+    </a>
+  </div>
     </div>
   );
 };
