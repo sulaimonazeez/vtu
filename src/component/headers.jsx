@@ -120,7 +120,7 @@ const Header = () => {
     
     <div className="balance-card">
       <h2>Wallet Balance</h2>
-      <p>₦{ balance.balance || 0 }</p>
+      <p>₦{ balance || 0 }</p>
         <div>
           <span><small>9Payment Service Bank || </small></span>
           <span id="accs"><strong><small>5458657957</small></strong></span>
