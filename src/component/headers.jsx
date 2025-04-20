@@ -130,7 +130,7 @@ const Header = () => {
 
     <!-- Service Cards -->
     <div className="services">
-      <div className="service-box" id="airtime">
+      <div onClick={ () => navigate("/airtime")} className="service-box" id="airtime">
         <i className="fas fa-phone-volume"></i>
         <span>Airtime</span>
       </div>
