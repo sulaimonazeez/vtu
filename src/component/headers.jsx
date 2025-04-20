@@ -116,7 +116,7 @@ const Header = () => {
         <span>Good Day, {profile?.first_name || "User"}</span>
       </div>
       <i className="fas fa-bell notification-icon"></i>
-    </div><br/><br /><br />
+    </div><br/>
     
     <div className="balance-card">
       <h2>Wallet Balance</h2>
