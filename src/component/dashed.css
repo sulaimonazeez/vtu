@@ -128,8 +128,8 @@ body {
 
 .avatar {
   width: 1rem;
-  height: 1rem;
-  border-radius: 50vw;
+  height: 2rem;
+  border-radius: 50%;
 }
 
 .notification-icon {
