@@ -118,7 +118,7 @@ const Airtime = () => {
         <div className="bodys">
             <div className="container spacing">
                 <h2 className="text-center mb-4">Buy Data</h2>
-                <div className="d-flex justify-content-center network-icons mb-3">
+                <div className="text-center d-flex justify-content-center network-icons mb-3">
             <img onClick={ () => setNetwork("airtel") } style={{width: "15%", height: "14vw"}} id="airtel" src="https://paystar.com.ng/static/airtel.png" alt="Airtel" />
             <img onClick={ () => setNetwork("mtn") } style={{width: "15%", height: "14vw"}} id="mtn" src="https://paystar.com.ng/static/mtn.png" alt="MTN" />
             <img onClick={ () => setNetwork("glo") } style={{width: "15%", height: "14vw"}} id="glo" src="https://paystar.com.ng/static/glo.png" alt="Glo" />
