@@ -106,6 +106,8 @@
 }
 network-icons {
             display: flex;
+            text-align: center;
+            align-item: center;
             justify-content: space-evenly;
         }
         .network-icons img {
