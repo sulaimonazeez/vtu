@@ -108,7 +108,7 @@ network-icons {
             display: flex;
             text-align: center;
             align-item: center;
-            justify-content: space-evenly;
+            justify-content: center;
         }
         .network-icons img {
             width: 18%;
