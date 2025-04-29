@@ -76,7 +76,7 @@ const Airtime = () => {
             setTransactionStatus(message);
         } catch (error) {
             console.error("Error:", error);
-            setTransactionStatus("❌ Failed to buy data. Please try again.");
+            setTransactionStatus("Failed to Perform Transaction. Please try again.");
         } finally {
             setResponseModalVisible(true); // Show transaction response modal
         }
