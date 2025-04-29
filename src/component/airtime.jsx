@@ -185,7 +185,7 @@ const Airtime = () => {
                 </Modal>
 
 
-                <Modal show={responseModalVisible} onHide={() => setResponseModalVisible(false)} centered>
+                <Modal show={responseModalVisible} onHide={() => setResponseModalVisible(false)} className="text-center">
     <Modal.Header closeButton className="modal-header-custom">
         <Modal.Title className="text-center w-100">Transaction Status</Modal.Title>
     </Modal.Header>
