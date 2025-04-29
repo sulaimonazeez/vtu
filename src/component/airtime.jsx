@@ -19,6 +19,7 @@ const Airtime = () => {
     const [transactionStatus, setTransactionStatus] = useState("");
     const [message, setResponseMessage] = useState("")
     const navigate = useNavigate();
+    const [error, setError] = useState("");
 
     useEffect(() => {
         const myRefresh = async () => {
@@ -76,6 +77,7 @@ const Airtime = () => {
             setTransactionStatus(message);
         } catch (error) {
             console.error("Error:", error);
+            setError(error);
             setTransactionStatus("Failed to Perform Transaction. Please try again.");
         } finally {
             setResponseModalVisible(true); // Show transaction response modal
@@ -191,7 +193,7 @@ const Airtime = () => {
     </Modal.Header>
     <Modal.Body className="text-center">
         <div className="status-icon">
-            <i className="fs-1 fa fa-check-circle" aria-hidden="true"></i>
+            <i className={error ? "fs-1 fa fa-check-circle bg-secondary":"fs-1 fa fa-check-circle bg-danger"} aria-hidden="true"></i>
         </div>
         <p className="transaction-status-text">{transactionStatus}</p>
     </Modal.Body>
