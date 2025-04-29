@@ -185,20 +185,23 @@ const Airtime = () => {
                 </Modal>
 
 
-                <Modal show={responseModalVisible} onHide={() => setResponseModalVisible(false)}>
-                    <Modal.Header closeButton>
-                    <Modal.Title>Transaction Status</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                                        <div className="status--done text-center text-white"><i class="fs-1 fa fa-check" aria-hidden="true"></i></div>
-                                        <p className="text-center">{transactionStatus}</p>
-                                    </Modal.Body>
-                                    <Modal.Footer>
-                                        <button className="btn btn-secondary" onClick={() => setResponseModalVisible(false)}>
-                                            Close
-                                        </button>
-                                    </Modal.Footer>
-                </Modal>
+                <Modal show={responseModalVisible} onHide={() => setResponseModalVisible(false)} centered>
+    <Modal.Header closeButton className="modal-header-custom">
+        <Modal.Title className="text-center w-100">Transaction Status</Modal.Title>
+    </Modal.Header>
+    <Modal.Body className="text-center">
+        <div className="status-icon">
+            <i className="fs-1 fa fa-check-circle" aria-hidden="true"></i>
+        </div>
+        <p className="transaction-status-text">{transactionStatus}</p>
+    </Modal.Body>
+    <Modal.Footer className="modal-footer-custom">
+        <button className="btn btn-primary" onClick={() => setResponseModalVisible(false)}>
+            Close
+        </button>
+    </Modal.Footer>
+</Modal>
+
             </div>
             <DownNav />
         </div>
