@@ -192,8 +192,8 @@ const Airtime = () => {
         <Modal.Title className="text-center w-100">Transaction Status</Modal.Title>
     </Modal.Header>
     <Modal.Body className="text-center">
-        <div className="status-icon">
-            <i style={error? {backgroundColor:"red"}:{backgroundColor:"green"}} className="fs-1 fa fa-check-circle" aria-hidden="true"></i>
+        <div className="status-icon" style={error? {backgroundColor:"red"}:{backgroundColor:"green"}}>
+            <i className="fs-1 fa fa-check-circle" aria-hidden="true"></i>
         </div>
         <p className="transaction-status-text">{transactionStatus}</p>
     </Modal.Body>
