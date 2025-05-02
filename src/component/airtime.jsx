@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import DownNav from "./downNav";
 
-
 const Airtime = () => {
 
     const [network, setNetwork] = useState("");
@@ -72,13 +71,15 @@ const Airtime = () => {
                     Authorization: `Bearer ${accessToken}`,
                     "Content-Type": "application/json",
                 },
-        });
+            });
             console.log("Response:", response.data);
-            setTransactionStatus(message);
+            setTransactionStatus(response.data.success ? "success" : "error");
+            setResponseMessage(response.data.message);
         } catch (error) {
             console.error("Error:", error);
             setError(error);
-            setTransactionStatus("Failed to Perform Transaction. Please try again.");
+            setTransactionStatus("error");
+            setResponseMessage("Failed to Perform Transaction. Please try again.");
         } finally {
             setResponseModalVisible(true); // Show transaction response modal
         }
@@ -96,7 +97,6 @@ const Airtime = () => {
         if (pin === "1111") {
             setModalVisible(false);
             sendData();
-            setResponseMessage(`You've successful Purchase Purchase Airtime ${amount} for ${phone}`)
             setPin("");
         } else {
             setUserMessage("Incorrect Pin");
@@ -121,11 +121,11 @@ const Airtime = () => {
             <div className="container spacing">
                 <h2 className="text-center mb-4">Buy Data</h2>
                 <div className="text-center d-flex justify-content-evenly network-icons mb-3">
-            <img onClick={ () => setNetwork("airtel") } style={{width: "15%", height: "14vw"}} id="airtel" src="https://paystar.com.ng/static/airtel.png" alt="Airtel" />
-            <img onClick={ () => setNetwork("mtn") } style={{width: "15%", height: "14vw"}} id="mtn" src="https://paystar.com.ng/static/mtn.png" alt="MTN" />
-            <img onClick={ () => setNetwork("glo") } style={{width: "15%", height: "14vw"}} id="glo" src="https://paystar.com.ng/static/glo.png" alt="Glo" />
-            <img onClick={ () => setNetwork("mobile9") } style={{width: "15%", height: "14vw"}} id="9mobile" src="https://paystar.com.ng/static/9mobile.png" alt="9mobile"/>
-        </div>
+                    <img onClick={ () => setNetwork("airtel") } style={{width: "15%", height: "14vw"}} id="airtel" src="https://paystar.com.ng/static/airtel.png" alt="Airtel" />
+                    <img onClick={ () => setNetwork("mtn") } style={{width: "15%", height: "14vw"}} id="mtn" src="https://paystar.com.ng/static/mtn.png" alt="MTN" />
+                    <img onClick={ () => setNetwork("glo") } style={{width: "15%", height: "14vw"}} id="glo" src="https://paystar.com.ng/static/glo.png" alt="Glo" />
+                    <img onClick={ () => setNetwork("mobile9") } style={{width: "15%", height: "14vw"}} id="9mobile" src="https://paystar.com.ng/static/9mobile.png" alt="9mobile"/>
+                </div>
                 <form onSubmit={handleFormSubmit} noValidate>
                     <div className="form-group">
                         <select
@@ -157,60 +157,60 @@ const Airtime = () => {
                             onChange={handleAmount}
                             placeholder="Amount to pay"
                             type="number"
+                            value={amount}
                             className="form-control"
                             required
-                            value={amount}
                         />
                     </div>
 
-                    <div className="text-center">
-                        <button type="submit" className="btn btn-primary">Buy Now</button>
-                    </div>
-                </form>
+                    {userMessage && <p className="text-danger">{userMessage}</p>}
 
-                <Modal show={modalVisible} onHide={() => setModalVisible(false)}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Enter Your PIN</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
+                    <button type="submit" className="btn btn-primary">Proceed</button>
+                </form>
+            </div>
+
+            {/* PIN Modal */}
+            <Modal show={modalVisible} onHide={() => setModalVisible(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Enter PIN</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div>
                         <input
                             type="password"
                             className="form-control"
                             value={pin}
                             onChange={handlePinChange}
-                            maxLength={4}
-                            placeholder="Enter 4-digit PIN"
+                            placeholder="Enter 4-Digit Pin"
+                            maxLength="4"
                         />
-                        {userMessage && <p>{userMessage}</p>}
-                        <button onClick={submitPin} className="btn btn-primary mt-2">Submit</button>
-                    </Modal.Body>
-                </Modal>
+                    </div>
+                    {userMessage && <p className="text-danger">{userMessage}</p>}
+                </Modal.Body>
+                <Modal.Footer>
+                    <button className="btn btn-primary" onClick={submitPin}>Submit</button>
+                </Modal.Footer>
+            </Modal>
 
+            {/* Transaction Response Modal */}
+            <Modal show={responseModalVisible} onHide={() => setResponseModalVisible(false)} className="text-center">
+                <Modal.Header closeButton className={`modal-header-custom ${transactionStatus === "success" ? "success" : "error"}`}>
+                    <Modal.Title>Transaction Status</Modal.Title>
+                </Modal.Header>
+                <Modal.Body className="modal-body">
+                    <div className={`status-icon ${transactionStatus === "success" ? "success" : "error"}`}>
+                        <i className={`fa ${transactionStatus === "success" ? "fa-check-circle" : "fa-times-circle"}`} aria-hidden="true"></i>
+                    </div>
+                    <p className="transaction-status-text">{message}</p>
+                </Modal.Body>
+                <Modal.Footer className="modal-footer-custom">
+                    <button className="btn-primary" onClick={() => setResponseModalVisible(false)}>Close</button>
+                </Modal.Footer>
+            </Modal>
 
-                <Modal show={responseModalVisible} onHide={() => setResponseModalVisible(false)} className="text-center">
-    <Modal.Header closeButton className="modal-header-custom">
-        <Modal.Title className="text-center w-100">Transaction Status</Modal.Title>
-    </Modal.Header>
-    <Modal.Body className="text-center">
-        <div className="status-icon" style={error? {backgroundColor:"red"}:{backgroundColor:"green"}}>
-            <i className="fs-1 fa fa-check-circle" aria-hidden="true"></i>
-        </div>
-        <p className="transaction-status-text">{transactionStatus}</p>
-    </Modal.Body>
-    <Modal.Footer className="modal-footer-custom">
-        <button className="btn btn-primary" onClick={() => setResponseModalVisible(false)}>
-            Close
-        </button>
-    </Modal.Footer>
-</Modal>
-
-
-            </div>
             <DownNav />
         </div>
-
-    )
-}
-
+    );
+};
 
 export default Airtime;
