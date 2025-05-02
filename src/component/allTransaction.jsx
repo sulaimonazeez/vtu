@@ -35,7 +35,7 @@ const AllTransaction = () => {
                 });
 
                 setHistory(response.data);
-                setFilteredHistory(response.data);
+                setFilteredHistory(response.data);  // Initially set filteredHistory with all history
             } catch (e) {
                 console.error("Error fetching history:", e);
             } finally {
@@ -80,7 +80,10 @@ const AllTransaction = () => {
         };
 
         checkTokenAndFetch();
+    }, [navigate]);
 
+    // New useEffect to handle filtering
+    useEffect(() => {
         if (searchQuery) {
             const filtered = history.filter((data) =>
                 data.message.toLowerCase().includes(searchQuery.toLowerCase())
@@ -89,8 +92,7 @@ const AllTransaction = () => {
         } else {
             setFilteredHistory(history);
         }
-
-    }, [searchQuery, navigate, history]);
+    }, [searchQuery, history]);  // Only depend on searchQuery and history
 
     return (
         <section className="parent-container">
