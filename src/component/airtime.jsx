@@ -198,7 +198,7 @@ const Airtime = () => {
                     <Modal.Title>Transaction Status</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="modal-body">
-                    <div className={`status-icon ${transactionStatus === "success" ? "success" : "error"}`}>
+                    <div className={`status-icon ${transactionStatus === "success" ? "success bg-success" : "bg-danger error"}`}>
                         <i className={`fa ${transactionStatus === "success" ? "fa-check-circle text-success fs-1" : "fs-1 text-danger fa-times-circle"}`} aria-hidden="true" style={{fontSize:"100px"}}></i>
                     </div>
                     <p className="transaction-status-text">{message}</p>
