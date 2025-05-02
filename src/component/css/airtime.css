@@ -70,7 +70,6 @@
     top: 8rem;
 }
 
-
 /* Button Styling */
 .modal-content button {
     padding: 10px 20px;
@@ -104,102 +103,106 @@
     text-align: center;
     cursor: pointer;
 }
-network-icons {
-            display: flex;
-            text-align: center;
-            align-item: center;
-            justify-content: center;
-        }
-        .network-icons img {
-            text-align: center;
-            width: 18%;
-            max-width: 70px;
-            height: auto;
-            border-radius: 10px;
-            border: 2px solid transparent;
-            cursor: pointer;
-            transition: border-color 0.3s ease;
-        }
 
-        .network-icons img:hover {
-            border-color: #007bff;
-        }
-.status--done {
-    background-color: red;
-    padding: 1rem;
-    border-radius: 50vw;
-    width: 5rem;
-    height: 5rem;
-    color: white;
-    text-align: center;
-    position: relative;
-    left:35%;
-}
-.status--done i {
-    position: relative;
-    top: 0.4rem;
+/* Success/Failure status styling */
+.status-icon {
+    font-size: 70px;
+    margin-bottom: 20px;
+    transition: color 0.3s ease-in-out;
 }
 
-
-/* Hover effect for bottom navbar */
-.down-fixed > div:hover {
-    background-color: #f3f3f3;
-    transform: scale(1.1);
-    transition: transform all 1s;
-}
-/* General modal styling */
-.modal-dialog {
-    max-width: 500px;
-    border-radius: 8px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+.status-icon i {
+    font-size: 50px;
+    margin-bottom: 10px;
 }
 
+/* Success Status */
+.success {
+    color: #28a745; /* Green for success */
+}
+
+.success .status-icon {
+    color: #28a745; /* Green icon for success */
+}
+
+.success .modal-header-custom {
+    background-color: #e6f9e6; /* Light green background for success */
+}
+
+.success .btn-primary {
+    background-color: #28a745; /* Green button */
+    border-color: #28a745;
+}
+
+.success .btn-primary:hover {
+    background-color: #218838; /* Darker green on hover */
+    border-color: #1e7e34;
+}
+
+/* Error Status */
+.error {
+    color: #dc3545; /* Red for error */
+}
+
+.error .status-icon {
+    color: #dc3545; /* Red icon for failure */
+}
+
+.error .modal-header-custom {
+    background-color: #f8d7da; /* Light red background for error */
+}
+
+.error .btn-primary {
+    background-color: #dc3545; /* Red button */
+    border-color: #dc3545;
+}
+
+.error .btn-primary:hover {
+    background-color: #c82333; /* Darker red on hover */
+    border-color: #bd2130;
+}
+
+/* Modal Header Styling */
 .modal-header-custom {
-    border-bottom: none;
-    padding-bottom: 10px;
-    background-color: #f7f9fc;
+    background-color: #f0f4f7;
+    padding: 20px 30px;
+    border-bottom: 2px solid #ddd;
+    border-radius: 12px 12px 0 0;
 }
 
 .modal-title {
     font-size: 24px;
     font-weight: 600;
     color: #333;
+    text-align: center;
 }
 
+/* Modal Body Styling */
 .modal-body {
     padding: 40px 30px;
     font-size: 16px;
     color: #555;
+    text-align: center;
 }
 
-.status-icon i {
-    color: #28a745;  /* Green for success */
-    font-size: 50px;
-    margin-bottom: 20px;
-}
-
-.transaction-status-text {
-    font-size: 18px;
-    font-weight: 500;
-    color: #555;
-    margin-top: 10px;
-}
-
+/* Modal Footer Styling */
 .modal-footer-custom {
     border-top: none;
     padding-top: 10px;
     background-color: #f7f9fc;
     display: flex;
     justify-content: center;
+    padding-bottom: 20px;
 }
 
+/* Close button styling */
 .btn-primary {
     background-color: #007bff;
     border-color: #007bff;
     padding: 12px 25px;
     font-size: 16px;
     font-weight: 500;
-    border-radius: 5px;
+    border-radius: 8px;
     transition: background-color 0.3s ease;
 }
 
@@ -208,17 +211,9 @@ network-icons {
     border-color: #004085;
 }
 
-.modal-contents {
-    background-color: #ffffff;
-    border-radius: 8px;
-}
-
-.modal-backdrop {
-    background-color: rgba(0, 0, 0, 0.3);
-}
-
+/* Media Queries for responsiveness */
 @media screen and (max-width: 768px) {
     .modal-content {
-        left: 7%;
+        left: 5%;
     }
 }
