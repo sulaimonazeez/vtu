@@ -9,17 +9,17 @@ const AllTransaction = () => {
     const [history, setHistory] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [filteredHistory, setFilteredHistory] = useState([]);
+    const [loading, setLoading] = useState(true);  // For loading state
     const navigate = useNavigate();
 
-    // Handle search input change
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
     };
 
-    // Filter transactions based on search query
     useEffect(() => {
         const getHistory = async () => {
             try {
+                setLoading(true);
                 const accessToken = localStorage.getItem("access_token");
 
                 if (!accessToken) {
@@ -38,6 +38,8 @@ const AllTransaction = () => {
                 setFilteredHistory(response.data);
             } catch (e) {
                 console.error("Error fetching history:", e);
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -55,10 +57,8 @@ const AllTransaction = () => {
                     refresh: refreshToken,
                 });
 
-                // Update token & expiration time
                 localStorage.setItem("access_token", res.data.access);
                 localStorage.setItem("expires_in", Date.now() + 3600 * 1000); // 1-hour expiry
-                console.log("Token refreshed successfully");
             } catch (e) {
                 console.error("Refresh token failed, logging out.");
                 localStorage.removeItem("access_token");
@@ -72,19 +72,15 @@ const AllTransaction = () => {
             const expiresIn = localStorage.getItem("expires_in");
 
             if (accessToken && expiresIn && Date.now() < expiresIn) {
-                console.log("Token Valid");
                 getHistory();
             } else {
-                console.log("Token expired or not found, refreshing...");
                 await myRefresh();
-                getHistory(); // Fetch history after refreshing the token
+                getHistory();
             }
         };
 
-        // Fetch data or refresh token on initial load
         checkTokenAndFetch();
 
-        // Filter history based on search query
         if (searchQuery) {
             const filtered = history.filter((data) =>
                 data.message.toLowerCase().includes(searchQuery.toLowerCase())
@@ -94,18 +90,17 @@ const AllTransaction = () => {
             setFilteredHistory(history);
         }
 
-    }, [searchQuery, navigate, history]); // Remove history from the dependency array
+    }, [searchQuery, navigate, history]);
 
     return (
-        <section className="parent-container" itemScope itemType="https://schema.org/ItemList">
+        <section className="parent-container">
             <header className="custom-search">
                 <h4>Transactions</h4>
                 <p className="to-grey">Your last 100 transactions.</p>
                 <p className="to-red">Click on the transaction to view the details.</p>
-                <form method="GET" onSubmit={(e) => e.preventDefault()}>
+                <form onSubmit={(e) => e.preventDefault()}>
                     <input
                         type="text"
-                        name="q"
                         placeholder="Search by message"
                         className="search"
                         value={searchQuery}
@@ -114,34 +109,43 @@ const AllTransaction = () => {
                 </form>
             </header>
 
-            <section className="search-result">
-                {filteredHistory && filteredHistory.map((data) => {
-                    const transactionLink = data.status_code
-                        ? `/history/${data.id}`
-                        : `/myreciept/${data.id}`;
-                    const statusClass = data.status_code ? 'success' : 'failure';
-                    const statusIcon = data.status_code ? 'fa-check' : 'fa-close';
-                    const statusText = data.status_code ? 'Success' : 'Failure';
-                    return (
-                        <a href={transactionLink} className={`detail jst-content ${statusClass}`} itemScope itemType="https://schema.org/Order" title="View Transaction Details">
-                            <div className="for-wifi">
-                                <i className={`fa fa-wifi ${statusClass}`} aria-label="WiFi Icon"></i>
-                            </div>
-                            <div className="data-wifi" itemProp="description">
-                                <h4>Data</h4>
-                                <p className="data-desc">{data.message}</p>
-                                <small>Ref: <span itemProp="orderNumber">{data.reference}</span></small>
-                            </div>
-                            <div className="data-amt">
-                                <br />
-                                <h4 itemProp="price">{data.amount}</h4>
-                                <small>{data.date}</small><br />
-                                <i className={`fa ${statusIcon}`} aria-label={statusText}></i>
-                            </div>
-                        </a>
-                    );
-                })}
-            </section>
+            {loading ? (
+                <div className="loading-indicator">Loading...</div>  // Custom loading indicator
+            ) : (
+                <section className="search-result">
+                    {filteredHistory.length > 0 ? (
+                        filteredHistory.map((data) => {
+                            const transactionLink = data.status_code
+                                ? `/history/${data.id}`
+                                : `/myreciept/${data.id}`;
+                            const statusClass = data.status_code ? 'success' : 'failure';
+                            const statusIcon = data.status_code ? 'fa-check' : 'fa-close';
+                            const statusText = data.status_code ? 'Success' : 'Failure';
+
+                            return (
+                                <a 
+                                    href={transactionLink}
+                                    className={`transaction-card ${statusClass}`}
+                                    title="View Transaction Details"
+                                >
+                                    <div className="transaction-icon">
+                                        <i className={`fa fa-wifi ${statusClass}`} aria-label="WiFi Icon"></i>
+                                    </div>
+                                    <div className="transaction-details">
+                                        <h4>{data.message}</h4>
+                                        <p>Ref: {data.reference}</p>
+                                        <span className="transaction-amount">{data.amount}</span>
+                                        <small>{data.date}</small>
+                                        <i className={`fa ${statusIcon}`} aria-label={statusText}></i>
+                                    </div>
+                                </a>
+                            );
+                        })
+                    ) : (
+                        <p>No transactions found.</p>  // Display message if no transactions
+                    )}
+                </section>
+            )}
 
             <DownNav />
         </section>
