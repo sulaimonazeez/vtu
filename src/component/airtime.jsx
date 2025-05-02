@@ -199,7 +199,7 @@ const Airtime = () => {
                 </Modal.Header>
                 <Modal.Body className="modal-body">
                     <div className={`status-icon ${transactionStatus === "success" ? "success" : "error"}`}>
-                        <i className={`fa ${transactionStatus === "success" ? "fa-check-circle fs-1" : "fs-1 fa-times-circle"}`} aria-hidden="true" style={{fontSize:"100px"}}></i>
+                        <i className={`fa ${transactionStatus === "success" ? "fa-check-circle text-success fs-1" : "fs-1 text-danger fa-times-circle"}`} aria-hidden="true" style={{fontSize:"100px"}}></i>
                     </div>
                     <p className="transaction-status-text">{message}</p>
                 </Modal.Body>
