@@ -24,7 +24,7 @@ const Airtime = () => {
         const myRefresh = async () => {
             try {
                 const refreshToken = localStorage.getItem("refresh_token");
-                const res = await axios.post("http://localhost:8000/api/token/refresh/", {
+                const res = await axios.post("https://paystar.com.ng/api/token/refresh/", {
                   refresh: refreshToken,
                 });
         
@@ -66,7 +66,7 @@ const Airtime = () => {
         }
         try {
             const accessToken = localStorage.getItem("access_token");
-            const response = await axios.post("http://127.0.0.1:8000/api/airtime/", formData, {
+            const response = await axios.post("https://paystar.com.ng/api/airtime/", formData, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                     "Content-Type": "application/json",
@@ -199,7 +199,7 @@ const Airtime = () => {
                 </Modal.Header>
                 <Modal.Body className="modal-body">
                     <div className={`status-icon ${transactionStatus === "success" ? "success" : "error"}`}>
-                        <i className={`fa ${transactionStatus === "success" ? "fa-check-circle" : "fa-times-circle"}`} aria-hidden="true"></i>
+                        <i className={`fa ${transactionStatus === "success" ? "fa-check-circle fs-2" : "fs-2 fa-times-circle"}`} aria-hidden="true"></i>
                     </div>
                     <p className="transaction-status-text">{message}</p>
                 </Modal.Body>
