@@ -9,7 +9,7 @@ const AllTransaction = () => {
     const [history, setHistory] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [filteredHistory, setFilteredHistory] = useState([]);
-    const [loading, setLoading] = useState(true);  // For loading state
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     const handleSearchChange = (e) => {
@@ -35,35 +35,11 @@ const AllTransaction = () => {
                 });
 
                 setHistory(response.data);
-                setFilteredHistory(response.data);  // Initially set filteredHistory with all history
+                setFilteredHistory(response.data);
             } catch (e) {
                 console.error("Error fetching history:", e);
             } finally {
                 setLoading(false);
-            }
-        };
-
-        const myRefresh = async () => {
-            try {
-                const refreshToken = localStorage.getItem("refresh_token");
-
-                if (!refreshToken) {
-                    console.error("No refresh token found.");
-                    navigate("/login");
-                    return;
-                }
-
-                const res = await axios.post("http://localhost:8000/api/token/refresh/", {
-                    refresh: refreshToken,
-                });
-
-                localStorage.setItem("access_token", res.data.access);
-                localStorage.setItem("expires_in", Date.now() + 3600 * 1000); // 1-hour expiry
-            } catch (e) {
-                console.error("Refresh token failed, logging out.");
-                localStorage.removeItem("access_token");
-                localStorage.removeItem("refresh_token");
-                navigate("/login");
             }
         };
 
@@ -82,7 +58,6 @@ const AllTransaction = () => {
         checkTokenAndFetch();
     }, [navigate]);
 
-    // New useEffect to handle filtering
     useEffect(() => {
         if (searchQuery) {
             const filtered = history.filter((data) =>
@@ -92,29 +67,26 @@ const AllTransaction = () => {
         } else {
             setFilteredHistory(history);
         }
-    }, [searchQuery, history]);  // Only depend on searchQuery and history
+    }, [searchQuery, history]);
 
     return (
-        <section className="parent-container">
-            <header className="custom-search">
-                <h4>Transactions</h4>
-                <p className="to-grey">Your last 100 transactions.</p>
-                <p className="to-red">Click on the transaction to view the details.</p>
-                <form onSubmit={(e) => e.preventDefault()}>
-                    <input
-                        type="text"
-                        placeholder="Search by message"
-                        className="search"
-                        value={searchQuery}
-                        onChange={handleSearchChange}
-                    />
-                </form>
+        <section className="transactions-container">
+            <header className="header">
+                <h4>Transaction History</h4>
+                <p>Your recent transactions.</p>
+                <input
+                    type="text"
+                    placeholder="Search by message"
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                    className="search-input"
+                />
             </header>
 
             {loading ? (
-                <div className="loading-indicator">Loading...</div>  // Custom loading indicator
+                <div className="loading">Loading...</div>
             ) : (
-                <section className="search-result">
+                <div className="transactions-list">
                     {filteredHistory.length > 0 ? (
                         filteredHistory.map((data) => {
                             const transactionLink = data.status_code
@@ -125,28 +97,29 @@ const AllTransaction = () => {
                             const statusText = data.status_code ? 'Success' : 'Failure';
 
                             return (
-                                <a 
-                                    href={transactionLink}
+                                <div 
+                                    key={data.id}
                                     className={`transaction-card ${statusClass}`}
                                     title="View Transaction Details"
                                 >
-                                    <div className="transaction-icon">
-                                        <i className={`fa fa-wifi ${statusClass}`} aria-label="WiFi Icon"></i>
-                                    </div>
-                                    <div className="transaction-details">
-                                        <h4>{data.message}</h4>
+                                    <div className="transaction-info">
+                                        <h5>{data.message}</h5>
                                         <p>Ref: {data.reference}</p>
-                                        <span className="transaction-amount">{data.amount}</span>
-                                        <small>{data.date}</small>
+                                        <div className="transaction-footer">
+                                            <span className="amount">{data.amount}</span>
+                                            <small>{data.date}</small>
+                                        </div>
+                                    </div>
+                                    <div className="status-icon">
                                         <i className={`fa ${statusIcon}`} aria-label={statusText}></i>
                                     </div>
-                                </a>
+                                </div>
                             );
                         })
                     ) : (
-                        <p>No transactions found.</p>  // Display message if no transactions
+                        <p>No transactions found.</p>
                     )}
-                </section>
+                </div>
             )}
 
             <DownNav />
