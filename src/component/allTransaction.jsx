@@ -17,6 +17,7 @@ const AllTransaction = () => {
     };
 
     useEffect(() => {
+        // This function is responsible for fetching history
         const getHistory = async () => {
             try {
                 setLoading(true);
@@ -35,7 +36,7 @@ const AllTransaction = () => {
                 });
 
                 setHistory(response.data);
-                setFilteredHistory(response.data);
+                setFilteredHistory(response.data); // Set filtered history initially as all fetched history
             } catch (e) {
                 console.error("Error fetching history:", e);
             } finally {
@@ -43,21 +44,48 @@ const AllTransaction = () => {
             }
         };
 
+        // This function refreshes the access token using the refresh token
+        const myRefresh = async () => {
+            try {
+                const refreshToken = localStorage.getItem("refresh_token");
+
+                if (!refreshToken) {
+                    console.error("No refresh token found.");
+                    navigate("/login");
+                    return;
+                }
+
+                const res = await axios.post("http://localhost:8000/api/token/refresh/", {
+                    refresh: refreshToken,
+                });
+
+                localStorage.setItem("access_token", res.data.access);
+                localStorage.setItem("expires_in", Date.now() + 3600 * 1000); // 1-hour expiry
+            } catch (e) {
+                console.error("Refresh token failed, logging out.");
+                localStorage.removeItem("access_token");
+                localStorage.removeItem("refresh_token");
+                navigate("/login");
+            }
+        };
+
+        // This function checks the token's validity and refreshes if necessary
         const checkTokenAndFetch = async () => {
             const accessToken = localStorage.getItem("access_token");
             const expiresIn = localStorage.getItem("expires_in");
 
             if (accessToken && expiresIn && Date.now() < expiresIn) {
-                getHistory();
+                getHistory(); // Access token is valid, fetch history
             } else {
-                await myRefresh();
+                await myRefresh(); // Refresh token and then fetch history
                 getHistory();
             }
         };
 
-        checkTokenAndFetch();
+        checkTokenAndFetch(); // Call this function when the component mounts
     }, [navigate]);
 
+    // New useEffect to handle filtering
     useEffect(() => {
         if (searchQuery) {
             const filtered = history.filter((data) =>
@@ -67,7 +95,7 @@ const AllTransaction = () => {
         } else {
             setFilteredHistory(history);
         }
-    }, [searchQuery, history]);
+    }, [searchQuery, history]); // Only depend on searchQuery and history
 
     return (
         <section className="transactions-container">
