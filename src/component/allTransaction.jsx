@@ -4,6 +4,7 @@ import axiosInstance from "./utility";
 import DownNav from './downNav';
 import "./css/transaction.css";
 import axios from 'axios';
+import { Link } from 'react-router-dom'; // Import Link for navigation
 
 const AllTransaction = () => {
     const [history, setHistory] = useState([]);
@@ -31,7 +32,7 @@ const AllTransaction = () => {
 
                 const response = await axiosInstance.get("/history/", {
                     headers: {
-                        Authorization: Bearer ${accessToken},
+                        Authorization: `Bearer ${accessToken}`, // Corrected syntax here
                     },
                 });
 
@@ -118,16 +119,17 @@ const AllTransaction = () => {
                     {filteredHistory.length > 0 ? (
                         filteredHistory.map((data) => {
                             const transactionLink = data.status_code
-                                ? /history/${data.id}
-                                : /myreciept/${data.id};
+                                ? `/history/${data.id}` // Use a template literal here
+                                : `/myreciept/${data.id}`;
                             const statusClass = data.status_code ? 'success' : 'failure';
                             const statusIcon = data.status_code ? 'fa-check' : 'fa-close';
                             const statusText = data.status_code ? 'Success' : 'Failure';
 
                             return (
-                                <div 
+                                <Link 
                                     key={data.id}
-                                    className={transaction-card ${statusClass}}
+                                    to={transactionLink} // Use Link to navigate
+                                    className={`transaction-card ${statusClass}`} 
                                     title="View Transaction Details"
                                 >
                                     <div className="transaction-info">
@@ -139,9 +141,9 @@ const AllTransaction = () => {
                                         </div>
                                     </div>
                                     <div className="status-icon">
-                                        <i className={fa ${statusIcon}} aria-label={statusText}></i>
+                                        <i className={`fa ${statusIcon}`} aria-label={statusText}></i> 
                                     </div>
-                                </div>
+                                </Link>
                             );
                         })
                     ) : (
