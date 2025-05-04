@@ -7,7 +7,6 @@ import axios from "axios";
 import DownNav from "./downNav";
 
 const Airtime = () => {
-
     const [network, setNetwork] = useState("");
     const [amount, setAmount] = useState("");
     const [phone, setPhone] = useState("");
@@ -16,7 +15,7 @@ const Airtime = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const [responseModalVisible, setResponseModalVisible] = useState(false);
     const [transactionStatus, setTransactionStatus] = useState("");
-    const [message, setResponseMessage] = useState("")
+    const [message, setResponseMessage] = useState("");
     const navigate = useNavigate();
     const [error, setError] = useState("");
 
@@ -25,7 +24,7 @@ const Airtime = () => {
             try {
                 const refreshToken = localStorage.getItem("refresh_token");
                 const res = await axios.post("https://paystar.com.ng/api/token/refresh/", {
-                  refresh: refreshToken,
+                    refresh: refreshToken,
                 });
         
                 // Store new access token
@@ -49,21 +48,22 @@ const Airtime = () => {
         }
         
     }, [navigate]);
-        
+
     const handleNetworkChange = (e) => {
         setNetwork(e.target.value);
     };
 
     const handleAmount = (e) => {
         setAmount(e.target.value);
-    }
+    };
 
     const sendData = async () => {
         let formData = {
             network,
             phone,
-            amount
-        }
+            amount,
+        };
+
         try {
             const accessToken = localStorage.getItem("access_token");
             const response = await axios.post("https://paystar.com.ng/api/airtime/", formData, {
@@ -72,6 +72,7 @@ const Airtime = () => {
                     "Content-Type": "application/json",
                 },
             });
+
             console.log("Response:", response.data);
             setTransactionStatus(response.data.success ? "success" : "error");
             setResponseMessage(response.data.message);
@@ -83,11 +84,11 @@ const Airtime = () => {
         } finally {
             setResponseModalVisible(true); // Show transaction response modal
         }
-    }
+    };
 
     const handlePhone = (e) => {
         setPhone(e.target.value);
-    }
+    };
 
     const handlePinChange = (e) => {
         setPin(e.target.value.slice(0, 4)); // Ensures PIN is max 4 digits
@@ -121,19 +122,14 @@ const Airtime = () => {
             <div className="container spacing">
                 <h2 className="text-center mb-4">Buy Data</h2>
                 <div className="text-center d-flex justify-content-evenly network-icons mb-3">
-                    <img onClick={ () => setNetwork("airtel") } style={{width: "15%", height: "14vw"}} id="airtel" src="https://paystar.com.ng/static/airtel.png" alt="Airtel" />
-                    <img onClick={ () => setNetwork("mtn") } style={{width: "15%", height: "14vw"}} id="mtn" src="https://paystar.com.ng/static/mtn.png" alt="MTN" />
-                    <img onClick={ () => setNetwork("glo") } style={{width: "15%", height: "14vw"}} id="glo" src="https://paystar.com.ng/static/glo.png" alt="Glo" />
-                    <img onClick={ () => setNetwork("mobile9") } style={{width: "15%", height: "14vw"}} id="9mobile" src="https://paystar.com.ng/static/9mobile.png" alt="9mobile"/>
+                    <img onClick={() => setNetwork("airtel")} style={{ width: "15%", height: "14vw" }} id="airtel" src="https://paystar.com.ng/static/airtel.png" alt="Airtel" />
+                    <img onClick={() => setNetwork("mtn")} style={{ width: "15%", height: "14vw" }} id="mtn" src="https://paystar.com.ng/static/mtn.png" alt="MTN" />
+                    <img onClick={() => setNetwork("glo")} style={{ width: "15%", height: "14vw" }} id="glo" src="https://paystar.com.ng/static/glo.png" alt="Glo" />
+                    <img onClick={() => setNetwork("mobile9")} style={{ width: "15%", height: "14vw" }} id="9mobile" src="https://paystar.com.ng/static/9mobile.png" alt="9mobile" />
                 </div>
                 <form onSubmit={handleFormSubmit} noValidate>
                     <div className="form-group">
-                        <select
-                            className="form-control"
-                            value={network}
-                            onChange={handleNetworkChange}
-                            required
-                        >
+                        <select className="form-control" value={network} onChange={handleNetworkChange} required>
                             <option value="" disabled>Select Network</option>
                             <option value="airtel">Airtel</option>
                             <option value="mtn">MTN</option>
@@ -143,24 +139,11 @@ const Airtime = () => {
                     </div>
 
                     <div className="form-group" onChange={handlePhone}>
-                        <input
-                            placeholder="Phone Number"
-                            value={phone}
-                            type="tel"
-                            className="form-control"
-                            required
-                        />
+                        <input placeholder="Phone Number" value={phone} type="tel" className="form-control" required />
                     </div>
 
                     <div className="form-group">
-                        <input
-                            onChange={handleAmount}
-                            placeholder="Amount to pay"
-                            type="number"
-                            value={amount}
-                            className="form-control"
-                            required
-                        />
+                        <input onChange={handleAmount} placeholder="Amount to pay" type="number" value={amount} className="form-control" required />
                     </div>
 
                     {userMessage && <p className="text-danger">{userMessage}</p>}
@@ -176,14 +159,7 @@ const Airtime = () => {
                 </Modal.Header>
                 <Modal.Body>
                     <div>
-                        <input
-                            type="password"
-                            className="form-control"
-                            value={pin}
-                            onChange={handlePinChange}
-                            placeholder="Enter 4-Digit Pin"
-                            maxLength="4"
-                        />
+                        <input type="password" className="form-control" value={pin} onChange={handlePinChange} placeholder="Enter 4-Digit Pin" maxLength="4" />
                     </div>
                     {userMessage && <p className="text-danger">{userMessage}</p>}
                 </Modal.Body>
@@ -199,7 +175,7 @@ const Airtime = () => {
                 </Modal.Header>
                 <Modal.Body className="modal-body">
                     <div className={`status-icon ${transactionStatus === "success" ? "success" : "error"}`}>
-                        <i className={`fa ${transactionStatus === "success" ? "fa-check-circle text-success fs-1" : "fs-1 text-danger fa-times-circle"}`} aria-hidden="true" style={{fontSize:"100px"}}></i>
+                        <i className={`fa ${transactionStatus === "success" ? "fa-check-circle text-success fs-1" : "fs-1 text-danger fa-times-circle"}`} aria-hidden="true" style={{ fontSize: "100px" }}></i>
                     </div>
                     <p className="transaction-status-text">{message}</p>
                 </Modal.Body>
