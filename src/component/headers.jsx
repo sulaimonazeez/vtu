@@ -133,7 +133,7 @@ const Header = () => {
         <i className="fas fa-phone-volume"></i>
         <span>Airtime</span>
       </div>
-      <div className="service-box" id="data">
+      <div onClick={ () => navigate("/data")} className="service-box" id="data">
         <i className="fas fa-wifi"></i>
         <span>Data</span>
       </div>
