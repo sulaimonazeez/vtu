@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import './css/home.css';
+import "./dashed.css";
 
 const DownNav = () => {
     const navigate = useNavigate();
