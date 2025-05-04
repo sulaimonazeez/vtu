@@ -51,7 +51,7 @@ const Signup = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:8000/api/register/', userData, {
+      const response = await axios.post('https://paystar.com.ng/api/register/', userData, {
         headers: {
           'Content-Type': 'application/json',
           // Optional: You can pass the Authorization header if needed
