@@ -80,7 +80,7 @@ const Signup = () => {
             <div className="login-container">
                 <h2>Login</h2>
                 {error && <p style={{ color: "red" }}>{error}</p>}
-                <form id="loginForm" onSubmit={handleLogin}>
+                <form id="loginForm" onSubmit={handleSubmit}>
                     <div className="input-group">
                         <input
                             type="text"
