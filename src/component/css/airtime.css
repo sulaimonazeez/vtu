@@ -1,219 +1,162 @@
-/* Background color and overall container styles */
-.bodys {
-    background-color: rgba(255, 255, 255, 0.9); /* Deep white with transparency */
-}
-
-.container {
-    max-width: 400px;
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    margin-top: 50px;
-}
-
-/* Form and Input Styling */
-.form-control {
-    padding: 12px;
-    border-radius: 8px;
-    position: relative;
-}
-
-/* Select Dropdowns */
-.form-group {
-    position: relative;
-    margin-bottom: 20px;
-}
-
-/* Network icons styling */
-.network-icons img {
-    width: 18%;
-    max-width: 70px;
-    height: auto;
-    border-radius: 10px;
-    border: 2px solid transparent;
-    cursor: pointer;
-    transition: border-color 0.3s ease;
-}
-
-.network-icons img:hover {
-    border-color: #007bff;
-}
-
-/* Modal Overlay and Content Styling */
-.modals {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Darker background for better visibility */
-    backdrop-filter: blur(10px);
-    z-index: 999999999;
-    padding: 20px;
-    display: none; /* Keep hidden by default */
-}
-
-.modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    width: 90%; /* Responsive width */
-    max-width: 350px; /* Prevents it from becoming too large */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    position: absolute;
-    left: 15%;
-    top: 8rem;
-}
-
-/* Button Styling */
-.modal-content button {
-    padding: 10px 20px;
-    background-color: #333;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 16px;
-}
-
-.modal-content button:hover {
-    background-color: #555;
-}
-
-/* Bottom Fixed Navbar */
-.down-fixed {
-    position: fixed;
-    bottom: 0;
-    background-color: rgba(240, 240, 240, 0.9);
-    display: flex;
-    justify-content: space-evenly;
-    width: 100%;
-    left: 0;
-    text-align: center;
-    padding: 0.70rem;
-    border-radius: 5vw 5vw 0 0;
-}
-
-.down-fixed > div {
-    text-align: center;
-    cursor: pointer;
-}
-
-/* Success/Failure status styling */
-.status-icon {
-    font-size: 70px;
-    margin-bottom: 20px;
-    transition: color 0.3s ease-in-out;
-}
-
-.status-icon i {
-    font-size: 2rem;
-    margin-bottom: 10px;
-}
-
-/* Success Status */
-.success {
-    color: #28a745; /* Green for success */
-}
-
-.success .status-icon {
-    color: #28a745; /* Green icon for success */
-}
-
-.success .modal-header-custom {
-    background-color: #e6f9e6; /* Light green background for success */
-}
-
-.success .btn-primary {
-    background-color: #28a745; /* Green button */
-    border-color: #28a745;
-}
-
-.success .btn-primary:hover {
-    background-color: #218838; /* Darker green on hover */
-    border-color: #1e7e34;
-}
-
-/* Error Status */
-.error {
-    color: #dc3545; /* Red for error */
-}
-
-.error .status-icon {
-    color: #dc3545; /* Red icon for failure */
-}
-
-.error .modal-header-custom {
-    background-color: #f8d7da; /* Light red background for error */
-}
-
-.error .btn-primary {
-    background-color: #dc3545; /* Red button */
-    border-color: #dc3545;
-}
-
-.error .btn-primary:hover {
-    background-color: #c82333; /* Darker red on hover */
-    border-color: #bd2130;
-}
-
-/* Modal Header Styling */
+/* Modal Header Custom Styles */
 .modal-header-custom {
-    background-color: #f0f4f7;
-    padding: 20px 30px;
-    border-bottom: 2px solid #ddd;
-    border-radius: 12px 12px 0 0;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
 }
 
-.modal-title {
-    font-size: 24px;
-    font-weight: 600;
-    color: #333;
-    text-align: center;
+.modal-header-custom.success {
+    background-color: #e0f7e0; /* Greenish background for success */
+    border-bottom: 1px solid #28a745; /* Green border */
+}
+
+.modal-header-custom.error {
+    background-color: #f8d7da; /* Light red background for error */
+    border-bottom: 1px solid #dc3545; /* Red border */
 }
 
 /* Modal Body Styling */
 .modal-body {
-    padding: 40px 30px;
-    font-size: 16px;
-    color: #555;
+    padding: 30px;
     text-align: center;
 }
 
-/* Modal Footer Styling */
-.modal-footer-custom {
-    border-top: none;
-    padding-top: 10px;
-    background-color: #f7f9fc;
-    display: flex;
-    justify-content: center;
-    padding-bottom: 20px;
+.status-icon {
+    margin-bottom: 20px;
 }
 
-/* Close button styling */
+.status-icon.success {
+    color: #28a745;
+}
+
+.status-icon.error {
+    color: #dc3545;
+}
+
+.transaction-status-text {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.transaction-status-text.success {
+    color: #28a745; /* Green text for success */
+}
+
+.transaction-status-text.error {
+    color: #dc3545; /* Red text for error */
+}
+
+/* Modal Footer Custom Styles */
+.modal-footer-custom {
+    border-top: 1px solid #ddd;
+    text-align: center;
+    padding: 10px 20px;
+}
+
 .btn-primary {
     background-color: #007bff;
-    border-color: #007bff;
-    padding: 12px 25px;
+    border: none;
+    color: white;
+    padding: 10px 20px;
     font-size: 16px;
-    font-weight: 500;
-    border-radius: 8px;
+    border-radius: 5px;
     transition: background-color 0.3s ease;
 }
 
 .btn-primary:hover {
     background-color: #0056b3;
-    border-color: #004085;
 }
 
-/* Media Queries for responsiveness */
-@media screen and (max-width: 768px) {
-    .modal-content {
-        left: 5%;
-    }
+.btn-primary:focus {
+    box-shadow: none;
+}
+
+/* Styling for Success and Error Icons */
+.fs-1 {
+    font-size: 4rem; /* Increase icon size */
+}
+
+.text-success {
+    color: #28a745 !important;
+}
+
+.text-danger {
+    color: #dc3545 !important;
+}
+
+/* Custom Input Styles */
+.form-control {
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    box-shadow: none;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+}
+
+/* Input field styling for PIN Modal */
+input[type="password"] {
+    font-size: 18px;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+    border: 1px solid #ccc;
+}
+
+/* Message styling in PIN Modal */
+.text-danger {
+    color: #dc3545;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+/* Button Styling in Modal */
+button {
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+button:focus {
+    outline: none;
+}
+
+/* Background for Body and Container */
+.bodys {
+    background-color: #f0f2f5;
+    min-height: 100vh;
+    padding-top: 30px;
+}
+
+.container.spacing {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h2.text-center {
+    font-size: 24px;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Image styling for network icons */
+.network-icons img {
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+.network-icons img:hover {
+    transform: scale(1.1); /* Slight zoom effect on hover */
+}
+
+.form-group {
+    margin-bottom: 15px;
 }
