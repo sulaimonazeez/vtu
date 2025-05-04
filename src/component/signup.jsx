@@ -94,7 +94,7 @@ const Signup = () => {
                     </div>
                   <div className="input-group">
                         <input
-                            type="digit"
+                            type="number"
                             onChange={(e) => setPhone(e.target.value)}
                             id="phone"
                             required
