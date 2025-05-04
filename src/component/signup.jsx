@@ -9,7 +9,7 @@ const Signup = () => {
   const [fullname, setFullname] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-
+  const [remember, setRemember] = useState(false);
   // Function to check if the token is expired
   const isTokenExpired = () => {
     const accessToken = localStorage.getItem('access_token');
