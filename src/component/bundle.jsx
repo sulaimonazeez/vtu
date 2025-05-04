@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./css/bundle.css";
+import "./css/airtime.css";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "./utility";
 import DownNav from "./downNav";
