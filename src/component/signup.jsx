@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import "./css/signup.css";
+import "./css/login.css";
 
 const Signup = () => {
   const [username, setUsername] = useState('');
@@ -76,57 +76,93 @@ const Signup = () => {
   };
 
   return (
-    <div className="signup-container">
-      <h2>Create an Account</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <input
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <input
-            type="text"
-            placeholder="Phone"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <input
-            type="text"
-            placeholder="Full Name"
-            value={fullname}
-            onChange={(e) => setFullname(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Sign Up</button>
-      </form>
+    <div className="body">
+            <div className="login-container">
+                <h2>Login</h2>
+                {error && <p style={{ color: "red" }}>{error}</p>}
+                <form id="loginForm" onSubmit={handleLogin}>
+                    <div className="input-group">
+                        <input
+                            type="text"
+                            onChange={(e) => setUsername(e.target.value)}
+                            id="username"
+                            required
+                            placeholder=" "
+                            name="username"
+                        />
+                        <label htmlFor="username">Username</label>
+                    </div>
+                  <div className="input-group">
+                        <input
+                            type="digit"
+                            onChange={(e) => setPhone(e.target.value)}
+                            id="phone"
+                            required
+                            placeholder=" "
+                            name="phone"
+                        />
+                        <label htmlFor="phone">phone</label>
+                    </div>
+                  <div className="input-group">
+                        <input
+                            type="email"
+                            onChange={(e) => setEmail(e.target.value)}
+                            id="email"
+                            required
+                            placeholder=" "
+                            name="email"
+                        />
+                        <label htmlFor="email">Email</label>
+                    </div>
+                   <div className="input-group">
+                        <input
+                            type="text"
+                            onChange={(e) => setFullname(e.target.value)}
+                            id="fullname"
+                            required
+                            placeholder=" "
+                            name="fullname"
+                        />
+                        <label htmlFor="fullname">FullName</label>
+                    </div>
+                    <div className="input-group">
+                        <input
+                            name="password"
+                            onChange={(e) => setPassword(e.target.value)}
+                            type="password"
+                            id="password"
+                            required
+                            placeholder=" "
+                        />
+                        <label htmlFor="password">Password</label>
+                    </div>
+                    <div className="remember-forgot">
+                        <label>
+                            <input
+                                type="checkbox"
+                                name="remember"
+                                checked={remember}
+                                onChange={(e) => setRemember(e.target.checked)}
+                            />
+                            Remember me
+                        </label>
+                        <a href="/accounts/password/reset/">Forgot Password?</a>
+                    </div>
+                    <button type="submit" className="login-btn" id="loginBtn">
+                        <span className="login-lg">Login</span>
+                        <span className="login-auth">Authenticating <i className="dotdotdot"></i></span>
+                    </button>
+                </form>
+              <div className="text-danger text-center">
+                { error }
+              </div>
+                <div className="terms">
+                    By logging in, you agree to our <a href="/terms">Terms and Conditions</a>.
+                </div>
+                <div className="signup-link">
+                    Don't have an account? <a href="/accounts/create/">Sign up</a>
+                </div>
+            </div>
     </div>
   );
 };
