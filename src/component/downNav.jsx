@@ -12,23 +12,23 @@ const DownNav = () => {
       
     return (
         <div className="bottom-nav">
-            <div className="nav-item" onClick={() => navigate("/home")}>
-                <span className="nav-icon"><img src="https://paystar.com.ng/static/home.png" alt="Nav"/></span>
-                <span className="nav-label">Home</span>
-            </div>
-            <div className="nav-item" onClick={() => navigate("/history")}>
-                <span className="nav-icon"><img src="https://paystar.com.ng/static/receipt.png" alt="Nav"/></span>
-                <span className="nav-label">History</span>
-            </div>
-            <div className="nav-item" onClick={() => navigate("/notification")}>
-                <span className="nav-icon"><img src="https://paystar.com.ng/static/bell-notification-social-media.png" alt="Nav"/></span>
-                <span className="nav-label">Notifications</span>
-            </div>
-            <div className="nav-item" onClick={ Logout }>
-                <span className="nav-icon"><img src="https://paystar.com.ng/static/sign-out-alt.png" alt="Logo"/></span>
-                <span className="nav-label">Logout</span>
-            </div>
-      </div>
+    <a href="/home" className="active">
+      <i className="fas fa-home"></i>
+      Home
+    </a>
+    <a href="/history">
+      <i className="fas fa-list-alt"></i>
+      History
+    </a>
+    <a href="/notification">
+      <i className="fas fa-bell"></i>
+      Notification
+    </a>
+    <a href="/logout">
+      <i className="fas fa-sign-out-alt"></i>
+      Logout
+    </a>
+  </div>
     )
 }
 
