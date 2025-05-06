@@ -77,7 +77,7 @@ const BuyDataForm = () => {
             setTransactionStatus(message);
             console.log(response)
         } catch (error) {
-            setTransactionStatus("❌ Failed to buy data. Please try again.");
+            setTransactionStatus("Failed to buy data. Please try again.");
         } finally {
             setLoading(false);
             setResponseModalVisible(true); // Show transaction response modal
@@ -90,7 +90,7 @@ const BuyDataForm = () => {
             setResponseMessage(`You've successful Purchase Purchase ${selectedDataPlan} for ${phone}`)
             setPin("");
         } else {
-            setUserMessage("❌ Incorrect PIN");
+            setUserMessage("Incorrect PIN");
             setPin("");
         }
     };
@@ -98,7 +98,7 @@ const BuyDataForm = () => {
     const handleFormSubmit = (e) => {
         e.preventDefault();
         if (!selectedNetwork || !selectedDataType || !selectedDataPlan || !amount || !phone) {
-            setUserMessage("⚠️ Please fill in all fields");
+            setUserMessage("⚠Please fill in all fields");
             return;
         }
         setUserMessage("");
