@@ -170,20 +170,20 @@ const Airtime = () => {
             </Modal>
 
             {/* Transaction Response Modal */}
-            <Modal show={responseModalVisible} onHide={() => setResponseModalVisible(false)}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Transaction Status</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <div className="status--done text-center bg-success p-2 rounded-pill text-white"><i class="fa fa-check" aria-hidden="true"></i></div>
-                        <p className="text-center">{transactionStatus}</p>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <button className="btn btn-secondary" onClick={() => setResponseModalVisible(false)}>
-                            Close
-                        </button>
-                    </Modal.Footer>
-                </Modal>
+            <Modal show={responseModalVisible} onHide={() => setResponseModalVisible(false)} className="text-center">
+                <Modal.Header closeButton className={`modal-header-custom ${transactionStatus === "success" ? "success" : "error"}`}>
+                    <Modal.Title>Transaction Status</Modal.Title>
+                </Modal.Header>
+                <Modal.Body className="modal-body">
+                    <div className={`status-icon ${transactionStatus === "success" ? "success" : "error"}`}>
+                        <i className={`fa ${transactionStatus === "success" ? "fa-check-circle text-success fs-1" : "fs-1 text-danger fa-times-circle"}`} aria-hidden="true" style={{ fontSize: "100px" }}></i>
+                    </div>
+                    <p className="transaction-status-text">{message}</p>
+                </Modal.Body>
+                <Modal.Footer className="modal-footer-custom">
+                    <button className="btn-primary" onClick={() => setResponseModalVisible(false)}>Close</button>
+                </Modal.Footer>
+            </Modal>
             <DownNav />
         </div>
     );
