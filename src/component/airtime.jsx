@@ -67,7 +67,7 @@ const Airtime = () => {
 
         try {
             const accessToken = localStorage.getItem("access_token");
-            const response = await axios.post("https://paystar.com.ng/api/airtime/", formData, {
+            const response = await axios.post("https://paystar.com.ng/airtime/api/", formData, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                     "Content-Type": "application/json",
