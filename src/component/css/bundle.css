@@ -1,4 +1,82 @@
 /* Background color and overall container styles */
+.modal-header-custom {
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.modal-header-custom.success {
+    background-color: #e0f7e0; /* Greenish background for success */
+    border-bottom: 1px solid #28a745; /* Green border */
+}
+
+.modal-header-custom.error {
+    background-color: #f8d7da; /* Light red background for error */
+    border-bottom: 1px solid #dc3545; /* Red border */
+}
+
+/* Modal Body Styling */
+.modal-body {
+    padding: 30px;
+    text-align: center;
+}
+
+.status-icon {
+    margin-bottom: 20px;
+}
+
+.status-icon.success {
+    color: #28a745;
+}
+
+.status-icon.error {
+    color: #dc3545;
+}
+
+.transaction-status-text {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.transaction-status-text.success {
+    color: #28a745; /* Green text for success */
+}
+
+.transaction-status-text.error {
+    color: #dc3545; /* Red text for error */
+}
+
+/* Modal Footer Custom Styles */
+.modal-footer-custom {
+    border-top: 1px solid #ddd;
+    text-align: center;
+    padding: 10px 20px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-primary:focus {
+    box-shadow: none;
+}
+
+/* Styling for Success and Error Icons */
+.fs-1 {
+    font-size: 4rem; /* Increase icon size */
+}
+
 .bodys {
     background-color: rgba(255, 255, 255, 0.9); /* Deep white with transparency */
 }
