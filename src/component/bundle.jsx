@@ -74,9 +74,11 @@ const BuyDataForm = () => {
 
         try {
             const response = await axiosInstance.post("/buy-data/", formData);
-            setTransactionStatus(message);
+            setTransactionStatus(response["status"]);
             setResponseMessage(message);
-            console.log(response)
+            if (response["status"] === "failed") {
+               setResponseMessage("Failed to buy data. Please try again.");
+            }
         } catch (error) {
             setResponseMessage("Failed to buy data. Please try again.");
         } finally {
