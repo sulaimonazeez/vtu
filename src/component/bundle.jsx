@@ -75,9 +75,10 @@ const BuyDataForm = () => {
         try {
             const response = await axiosInstance.post("/buy-data/", formData);
             setTransactionStatus(message);
+            setResponseMessage(message);
             console.log(response)
         } catch (error) {
-            setTransactionStatus("Failed to buy data. Please try again.");
+            setResponseMessage("Failed to buy data. Please try again.");
         } finally {
             setLoading(false);
             setResponseModalVisible(true); // Show transaction response modal
@@ -87,7 +88,6 @@ const BuyDataForm = () => {
     const submitPin = () => {
         if (pin === "1111") {
             sendData();
-            setResponseMessage(`You've successful Purchase Purchase ${selectedDataPlan} for ${phone}`)
             setPin("");
         } else {
             setUserMessage("Incorrect PIN");
