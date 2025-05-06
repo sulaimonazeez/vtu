@@ -73,9 +73,9 @@ const Airtime = () => {
                 },
             });
 
-            console.log("Response:", response.data);
-            setTransactionStatus(response.data.success ? "success" : "error");
-            setResponseMessage(response.data.message);
+            //console.log("Response:", response);
+            setTransactionStatus(response["status"] ? "success" : "error");
+            setResponseMessage(response["message"]);
         } catch (error) {
             console.error("Error:", error);
             setError(error);
@@ -183,7 +183,6 @@ const Airtime = () => {
                     <button className="btn-primary" onClick={() => setResponseModalVisible(false)}>Close</button>
                 </Modal.Footer>
             </Modal>
-
             <DownNav />
         </div>
     );
