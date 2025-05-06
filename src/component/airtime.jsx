@@ -17,7 +17,6 @@ const Airtime = () => {
     const [transactionStatus, setTransactionStatus] = useState("");
     const [message, setResponseMessage] = useState("");
     const navigate = useNavigate();
-    const [userMessage, setUserMessage] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
