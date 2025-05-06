@@ -77,6 +77,9 @@ const Airtime = () => {
             //console.log("Response:", response);
             setTransactionStatus(response["status"] ? "success" : "error");
             setResponseMessage(response["message"]);
+            if (response["status"] === "failed") {
+                setResponseMessage("Failed to buy data. Please try again.");
+            }
         } catch (error) {
             console.error("Error:", error);
             setError(error);
