@@ -73,7 +73,7 @@ const BuyDataForm = () => {
         };
 
         try {
-            const response = await axiosInstance.post("/buy-data/", formData);
+            const response = await axiosInstance.post("/bundle/", formData);
             setTransactionStatus(response["status"]);
             setResponseMessage(message);
             if (response["status"] === "failed") {
