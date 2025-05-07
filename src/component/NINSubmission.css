@@ -1,1 +1,65 @@
+/* Container styling for full-screen center alignment */
+.nin-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f0f4ff, #cce4ff);
+}
+
+/* Card design */
+.nin-card {
+  background-color: #ffffff;
+  padding: 2rem 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+}
+
+/* Title Styling */
+.nin-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #003366;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* Form Input Styling */
+.nin-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 2px solid #cce4ff;
+  border-radius: 8px;
+  transition: border-color 0.3s;
+}
+
+.nin-input:focus {
+  outline: none;
+  border-color: #0077cc;
+}
+
+/* Button Styling */
+.nin-button {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  background-color: #0077cc;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.nin-button:hover {
+  background-color: #005bb5;
+}
+
+.nin-button.loading {
+  background-color: #7aa0c4;
+  cursor: not-allowed;
+}
 
