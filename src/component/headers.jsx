@@ -137,8 +137,7 @@ const Header = () => {
            <i className="fa fa-clone" aria-hidden="true"></i>
             ):(
                <Link to="/virtualaccount">Generate Virtual Account</Link>
-             )
-          }
+             )}
         </div>
     </div>
 
