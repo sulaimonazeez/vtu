@@ -75,9 +75,9 @@ const Airtime = () => {
             });
 
             //console.log("Response:", response);
-            if (response["status"] === "success" || response["status"] === "pending") {
+            if (response.data.status === "success" || response.data.status === "pending") {
                 setTransactionStatus("success");
-                setResponseMessage(response["message"]);
+                setResponseMessage(response.data.message);
             } else {
                 setTransactionStatus("error");
                 setResponseMessage("Failed to buy data. Please try again.");
