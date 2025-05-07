@@ -255,7 +255,7 @@ const Header = () => {
 
     
 
-    <div className="balance-card mt-5">
+    <div className="balance-card mt-1">
 
       <h2>Wallet Balance</h2>
 
