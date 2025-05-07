@@ -6,7 +6,7 @@ import Home from "./component/home.jsx";
 import BuyDataForm from "./component/bundle.jsx";
 import Airtime from "./component/airtime.jsx";
 import AllTransaction from "./component/allTransaction.jsx";
-import Verification from "./component/verification.jsx";
+import NINSubmission from "./component/verification.jsx";
 // Simple auth check (with token expiration handling)
 const isAuthenticated = () => {
   const accessToken = localStorage.getItem("access_token");
@@ -52,6 +52,7 @@ function App() {
         <Route path="/home" element={<PrivateRoute element={<Home />} />} />
         <Route path="/data" element={<PrivateRoute element={<BuyDataForm />} />} />
         <Route path="/airtime" element={<PrivateRoute element={<Airtime />} />} />
+        <Route path="/verification" element={<PrivateRoute element={<NINSubmission />} />} />
         <Route path="/history" element={<PrivateRoute element={<AllTransaction />} />} />
       </Routes>
     </Router>
