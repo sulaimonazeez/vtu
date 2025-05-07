@@ -132,12 +132,17 @@ const Header = () => {
       <p>₦{balance || 0}</p>
         <div>
           {status ? (
-          <span><small>{bankName} || </small></span>
-          <span id="accs"><strong><small>{accountNumber}</small></strong></span>
-           <i className="fa fa-clone" aria-hidden="true"></i>
-            ):(
-               <Link to="/virtualaccount">Generate Virtual Account</Link>
-             )}
+  <span>
+    <small>{bankName} || </small>
+    <span id="accs">
+      <strong><small>{accountNumber}</small></strong>
+    </span>
+    <i className="fa fa-clone" aria-hidden="true"></i>
+  </span>
+) : (
+  <Link to="/virtualaccount">Generate Virtual Account</Link>
+)}
+
         </div>
     </div>
 
