@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import DownNav from "./downNav";
 export default function Notifications() {
   const notifications = [
     { id: 1, icon: 'fa fa-bell', message: 'You have a new message from Admin.', time: '2 mins ago' },
@@ -23,6 +23,7 @@ export default function Notifications() {
           </div>
         ))}
       </div>
+      <DownNav />
     </div>
   );
 }
