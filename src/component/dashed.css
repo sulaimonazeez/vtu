@@ -1,3 +1,43 @@
+
+.stylish-button {
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: 16px;
+  color: #ffffff;
+  background-color: #007bff;
+  text-decoration: none;
+  border: 2px solid #007bff;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.stylish-button:hover {
+  background-color: #0056b3;
+  color: #ffffff;
+  border-color: #0056b3;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 20px rgba(0, 123, 255, 0.3);
+}
+
+.stylish-button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 300%;
+  height: 300%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: transform 0.4s ease;
+  border-radius: 50%;
+}
+
+.stylish-button:hover::before {
+  transform: translate(-50%, -50%) scale(1);
+}
+
 body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
