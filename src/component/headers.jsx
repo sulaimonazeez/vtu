@@ -281,7 +281,7 @@ const Header = () => {
 
 ) : (
 
-  <Link to="/virtualaccount" className="stylish-button">Generate Virtual Account</Link>
+  <Link to="/verification" className="stylish-button">Generate Virtual Account</Link>
 
 )}
 
