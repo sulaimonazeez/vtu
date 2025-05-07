@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./dashed.css";
 import Actions from "./actionNav";
 import axiosInstance from "./utility";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import Transaction from "./transactions";
 import DownNav from "./downNav";
@@ -11,6 +11,10 @@ const Header = () => {
   const [balance, setBalance] = useState(0);
   const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
+  const [accountNumber, setAccountNumber] = useState("");
+  const [bankName, setBankName] = useState("");
+  const [status, isStatus] = useState(false);
+  
   
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");
@@ -31,6 +35,11 @@ const Header = () => {
 
         setProfile(response.data);
         console.log("Profile Data:", response.data);
+        isStatus(response.data.status);
+        if (response.data.status === true) {
+            setAccountNumber(response.data.account_number);
+            setBankName(response.data.bank_name);
+        }
       } catch (error) {
         console.error("Error fetching profile:", error);
       }
@@ -122,9 +131,14 @@ const Header = () => {
       <h2>Wallet Balance</h2>
       <p>₦{balance || 0}</p>
         <div>
-          <span><small>9Payment Service Bank || </small></span>
-          <span id="accs"><strong><small>5458657957</small></strong></span>
+          {status ? (
+          <span><small>{bankName} || </small></span>
+          <span id="accs"><strong><small>{accountNumber}</small></strong></span>
            <i className="fa fa-clone" aria-hidden="true"></i>
+            ):(
+               <Link to="/virtualaccount">Generate Virtual Account</Link>
+             )
+          }
         </div>
     </div>
 
