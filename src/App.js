@@ -6,7 +6,7 @@ import Home from "./component/home.jsx";
 import BuyDataForm from "./component/bundle.jsx";
 import Airtime from "./component/airtime.jsx";
 import AllTransaction from "./component/allTransaction.jsx";
-
+import Verification from "./component/verification.jsx";
 // Simple auth check (with token expiration handling)
 const isAuthenticated = () => {
   const accessToken = localStorage.getItem("access_token");
