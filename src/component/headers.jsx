@@ -140,7 +140,7 @@ const Header = () => {
     <i className="fa fa-clone" aria-hidden="true"></i>
   </span>
 ) : (
-  <Link to="/virtualaccount">Generate Virtual Account</Link>
+  <Link to="/virtualaccount" className="stylish-button">Generate Virtual Account</Link>
 )}
 
         </div>
