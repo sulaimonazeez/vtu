@@ -123,6 +123,7 @@ const BuyDataForm = () => {
                 <form onSubmit={handleFormSubmit} noValidate>
                     <div className="form-group">
                         <select
+                            name="network"
                             className="form-control"
                             value={selectedNetwork}
                             onChange={handleNetworkChange}
@@ -138,6 +139,7 @@ const BuyDataForm = () => {
 
                     <div className="form-group">
                         <select
+                            name="sme"
                             className="form-control"
                             value={selectedDataType}
                             onChange={handleDataTypeChange}
@@ -155,6 +157,7 @@ const BuyDataForm = () => {
 
                     <div className="form-group">
                         <select
+                            name="dataType"
                             className="form-control"
                             value={selectedDataPlan}
                             onChange={handleDataPlanChange}
@@ -176,6 +179,7 @@ const BuyDataForm = () => {
 
                     <div className="form-group">
                         <input
+                            name="phone"
                             onChange={(e) => setPhone(e.target.value)}
                             placeholder="Phone Number"
                             type="tel"
@@ -187,6 +191,7 @@ const BuyDataForm = () => {
 
                     <div className="form-group">
                         <input
+                            name="amount"
                             placeholder="Amount to pay"
                             type="number"
                             className="form-control"
