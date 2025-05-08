@@ -19,6 +19,7 @@ const Airtime = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    
 
     useEffect(() => {
         const myRefresh = async () => {
@@ -154,7 +155,10 @@ const Airtime = () => {
 
                     {userMessage && <p className="text-danger">{userMessage}</p>}
 
-                    <button type="submit" className="btn btn-primary">Proceed</button>
+                    <button disabled={submitting} type="submit" className="btn btn-primary">
+                        {submitting? (<span>Proceed</span>):(<span> Purchasing... <i className="spinner-border"></i></span>)
+                        }
+                   </button>
                 </form>
             </div>
 
