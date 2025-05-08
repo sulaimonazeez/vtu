@@ -1,11 +1,12 @@
 // Profile.js
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import DownNav from "./downNav.jsx";
 
 const Profile = ({user}) => {
 
   return (
+    <div>
     <div className="container mt-5">
       <div className="card shadow-lg rounded">
         <div className="card-body text-center">
@@ -22,6 +23,8 @@ const Profile = ({user}) => {
           </p>
         </div>
       </div>
+    </div>
+      <DownNav />
     </div>
   );
 };
