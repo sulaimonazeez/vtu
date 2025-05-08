@@ -66,11 +66,11 @@ const BuyDataForm = () => {
         setModalVisible(false); // Close PIN modal
 
         const formData = {
-            selectedNetwork,
-            selectedDataType,
-            selectedDataPlan,
-            amount,
-            phone
+            network: selectedNetwork,
+            sme: selectedDataType,
+            dataType: selectedDataPlan,
+            amount: amount,
+            phone: phone
         };
 
         try {
