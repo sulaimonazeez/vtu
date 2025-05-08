@@ -77,6 +77,7 @@ const BuyDataForm = () => {
             const accessToken = localStorage.getItem("access_token");
             const response = await axios.post("https://paystar.com.ng/api/bundle/", formData, {
                 headers: {
+                       "Content-Type": "application/json",
                        'Authorization': `Bearer ${accessToken}`
                 }
              });
