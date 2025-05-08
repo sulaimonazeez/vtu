@@ -73,11 +73,17 @@ const BuyDataForm = () => {
         };
 
         try {
-            const response = await axiosInstance.post("/bundle/", formData);
+            const accessToken = localStorage.getItem("access_token");
+            const response = await axios.post("https://paystar.com.ng/api/bundle/", formData, {
+                headers: {
+                       'Authorization': `Bearer ${accessToken}`
+                }
+             });
+
             setTransactionStatus(response.data.status);
             setResponseMessage(response.data.message);
             if (response.data.status === "failed") {
-               setResponseMessage("Failed to buy data. Please try again.");
+               setResponseMessage("Failed to buy data. Please try again...");
             }
         } catch (error) {
             setResponseMessage("Failed to buy data. Please try again.");
