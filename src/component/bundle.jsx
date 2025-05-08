@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/bundle.css";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "./utility";
+//import axiosInstance from "./utility";
 import DownNav from "./downNav";
 
 const BuyDataForm = () => {
