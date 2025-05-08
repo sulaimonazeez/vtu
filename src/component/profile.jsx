@@ -1,91 +1,30 @@
+// Profile.js
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-const Profile = ({ user }) => {
+
+const Profile = ({user}) => {
+
   return (
-    <div style={styles.container}>
-      <div style={styles.profileSection}>
-        {/* Profile Image Icon */}
-        <div style={styles.iconContainer}>
-          <i className="fas fa-user-circle" style={styles.icon}></i>
-        </div>
-
-        <div style={styles.textContainer}>
-          {/* User Info */}
-          <h2 style={styles.name}>{user.firstName} {user.lastName}</h2>
-          <p style={styles.username}>{user.username}</p>
-
-          <div style={styles.contactInfo}>
-            <p style={styles.contactItem}><strong>Email:</strong> {user.email}</p>
-            <p style={styles.contactItem}><strong>Phone:</strong> {user.phone}</p>
+    <div className="container mt-5">
+      <div className="card shadow-lg rounded">
+        <div className="card-body text-center">
+          <div className="mb-4">
+            <i className="fa fa-user-circle fa-5x text-primary"></i>
           </div>
-
-          {/* Button to change profile picture */}
-          <button style={styles.button}>Change Profile Picture</button>
+          <h2 className="card-title font-weight-bold">{user.firstName} {user.lastName}</h2>
+          <h5 className="text-muted">@{user.username}</h5>
+          <p className="mt-3">
+            <i className="fa fa-envelope"></i> {user.email}
+          </p>
+          <p>
+            <i className="fa fa-phone"></i> {user.phone}
+          </p>
         </div>
       </div>
     </div>
   );
 };
 
-// Styles (in JS object format)
-const styles = {
-  container: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100vh',
-    backgroundColor: '#f8f9fa',
-  },
-  profileSection: {
-    display: 'flex',
-    alignItems: 'center',
-    backgroundColor: '#ffffff',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    borderRadius: '8px',
-    overflow: 'hidden',
-    width: '80%',
-    maxWidth: '800px',
-    padding: '20px',
-  },
-  iconContainer: {
-    flex: 1,
-    textAlign: 'center',
-  },
-  icon: {
-    fontSize: '120px',
-    color: '#6c757d',
-  },
-  textContainer: {
-    flex: 2,
-    marginLeft: '20px',
-  },
-  name: {
-    fontSize: '24px',
-    color: '#343a40',
-    marginBottom: '10px',
-  },
-  username: {
-    fontSize: '18px',
-    color: '#6c757d',
-    marginBottom: '15px',
-  },
-  contactInfo: {
-    marginBottom: '20px',
-  },
-  contactItem: {
-    fontSize: '16px',
-    color: '#495057',
-    marginBottom: '5px',
-  },
-  button: {
-    backgroundColor: '#007bff',
-    color: '#ffffff',
-    border: 'none',
-    padding: '10px 20px',
-    fontSize: '16px',
-    borderRadius: '4px',
-    cursor: 'pointer',
-  }
-};
-
 export default Profile;
+
