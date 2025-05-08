@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "./css/login.css";
+import { Link } from "react-router-dom";
 
 const Signup = () => {
   const [username, setUsername] = useState('');
@@ -10,6 +11,7 @@ const Signup = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [remember, setRemember] = useState(false);
+  const [submitting, isSubmit] = useState(false);
   // Function to check if the token is expired
   const isTokenExpired = () => {
     const accessToken = localStorage.getItem('access_token');
@@ -41,7 +43,7 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    isSubmit(true);
     const userData = {
       username,
       phone,
@@ -68,9 +70,11 @@ const Signup = () => {
         // Redirect to home or dashboard page
         window.location.href = '/home';  // Redirect to home page
       } else {
+        isSubmit(false)
         setError(response.data.error || 'Something went wrong');
       }
     } catch (error) {
+      isSubmit(false);
       setError('An error occurred during registration. Please try again later.');
     }
   };
@@ -146,21 +150,24 @@ const Signup = () => {
                             />
                             Remember me
                         </label>
-                        <a href="/accounts/password/reset/">Forgot Password?</a>
+                        <a href="https://paystar.com.ng/accounts/password/reset/">Forgot Password?</a>
                     </div>
-                    <button type="submit" className="login-btn" id="loginBtn">
-                        <span className="login-lg">Login</span>
-                        <span className="login-auth">Authenticating <i className="dotdotdot"></i></span>
+                    <button disable={submitting} type="submit" className="login-btn" id="loginBtn">
+                      {submitting? (
+                         <span className="login-lg">Login</span>
+                      ):(
+                        <span className="login-auth">Authenticating <i className="spinner-border"></i></span>
+                     )
                     </button>
                 </form>
               <div className="text-danger text-center">
                 { error }
               </div>
                 <div className="terms">
-                    By logging in, you agree to our <a href="/terms">Terms and Conditions</a>.
+                    By logging in, you agree to our <a href="https://paystar.com.ng/terms">Terms and Conditions</a>.
                 </div>
                 <div className="signup-link">
-                    Don't have an account? <a href="/accounts/create/">Sign up</a>
+                    Already have an account? <Link to="/login/">Login</Link>
                 </div>
             </div>
     </div>
