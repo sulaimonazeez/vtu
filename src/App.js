@@ -8,6 +8,7 @@ import Airtime from "./component/airtime.jsx";
 import AllTransaction from "./component/allTransaction.jsx";
 import NINSubmission from "./component/verification.jsx";
 import Notifications from "./component/notification.jsx";
+import ProfileWrapper import "./component/profilewrapper.jsx";
 // Simple auth check (with token expiration handling)
 const isAuthenticated = () => {
   const accessToken = localStorage.getItem("access_token");
@@ -52,6 +53,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/create" element={<Signup />} />
         <Route path="/home" element={<PrivateRoute element={<Home />} />} />
+        <Route path="/profile" element={PrivateRoute element={<ProfileWrapper />} />} />
         <Route path="/data" element={<PrivateRoute element={<BuyDataForm />} />} />
         <Route path="/airtime" element={<PrivateRoute element={<Airtime />} />} />
         <Route path="/notification" element={<PrivateRoute element={<Notifications />} />} />
