@@ -10,6 +10,7 @@ const Login = () => {
     const [error, setError] = useState("");
     const [remember, setRemember] = useState(false);
     const navigate = useNavigate();
+    const [submitting, isSubmit] = useState(false):
     const API_URL = "https://paystar.com.ng/api/login/";
 
     // Check if the user is already authenticated (i.e., has a valid access token)
@@ -27,7 +28,7 @@ const Login = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-
+        isSubmit(true);
         const userCredentials = {
             username,
             password,
@@ -54,6 +55,7 @@ const Login = () => {
             navigate("/home"); // Redirect to home or dashboard after successful login
         } catch (error) {
             setError(error.response ? error.response.data.message : error.message);
+            isSubmit(false)
         }
     };
 
@@ -97,9 +99,13 @@ const Login = () => {
                         </label>
                         <a href="/accounts/password/reset/">Forgot Password?</a>
                     </div>
-                    <button type="submit" className="login-btn" id="loginBtn">
-                        <span className="login-lg">Login</span>
-                        <span className="login-auth">Authenticating <i className="dotdotdot"></i></span>
+                    <button disable={submitting} type="submit" className="login-btn" id="loginBtn">
+                        {submitting? (
+                           <span className="login-lg">Login</span>
+                            ):(
+                             <span className="login-aut">Authenticating <i className="spinner-border"></i></span>
+                            )
+                        }
                     </button>
                 </form>
                 <div className="terms">
