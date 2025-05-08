@@ -53,7 +53,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/create" element={<Signup />} />
         <Route path="/home" element={<PrivateRoute element={<Home />} />} />
-        <Route path="/profile" element={PrivateRoute element={<ProfileWrapper />} />} />
+        <Route path="/profile" element={<PrivateRoute element={<ProfileWrapper />} />} />
         <Route path="/data" element={<PrivateRoute element={<BuyDataForm />} />} />
         <Route path="/airtime" element={<PrivateRoute element={<Airtime />} />} />
         <Route path="/notification" element={<PrivateRoute element={<Notifications />} />} />
