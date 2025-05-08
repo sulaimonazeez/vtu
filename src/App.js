@@ -8,7 +8,7 @@ import Airtime from "./component/airtime.jsx";
 import AllTransaction from "./component/allTransaction.jsx";
 import NINSubmission from "./component/verification.jsx";
 import Notifications from "./component/notification.jsx";
-import ProfileWrapper import "./component/profilewrapper.jsx";
+import ProfileWrapper import "./component/profileWrapper.jsx";
 // Simple auth check (with token expiration handling)
 const isAuthenticated = () => {
   const accessToken = localStorage.getItem("access_token");
