@@ -19,9 +19,7 @@ const Airtime = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-    const [submitting, isSubmit] = useState(false);
-    
-    
+    const [submitting, setSubmitting] = useState(false);
 
     useEffect(() => {
         const myRefresh = async () => {
@@ -30,7 +28,7 @@ const Airtime = () => {
                 const res = await axios.post("https://paystar.com.ng/api/token/refresh/", {
                     refresh: refreshToken,
                 });
-        
+
                 // Store new access token
                 localStorage.setItem("access_token", res.data.access);
             } catch (e) {
@@ -43,14 +41,14 @@ const Airtime = () => {
 
         const accessToken = localStorage.getItem("access_token");
         const expiresIn = localStorage.getItem("expires_in");
-    
+
         // If access token exists and has not expired, redirect to home page
         if (accessToken && expiresIn && Date.now() < expiresIn) {
             console.log("Token Valid");
         } else {
             myRefresh();
         }
-        
+
     }, [navigate]);
 
     const handleNetworkChange = (e) => {
@@ -62,7 +60,7 @@ const Airtime = () => {
     };
 
     const sendData = async () => {
-        isSubmit(true);
+        setSubmitting(true); // Start loading
         let formData = {
             network,
             phone,
@@ -83,7 +81,6 @@ const Airtime = () => {
                 setTransactionStatus("success");
                 setResponseMessage(response.data.message);
             } else {
-                
                 setTransactionStatus("error");
                 setResponseMessage("Failed to buy data. Please try again.");
             }
@@ -93,7 +90,7 @@ const Airtime = () => {
             setTransactionStatus("error");
             setResponseMessage("Failed to Perform Transaction. Please try again.");
         } finally {
-            isSubmit(false);
+            setSubmitting(false); // End loading
             setResponseModalVisible(true); // Show transaction response modal
         }
     };
@@ -123,7 +120,7 @@ const Airtime = () => {
             setUserMessage("Please fill in all fields");
             return;
         }
-    
+
         // Show modal for PIN entry
         setUserMessage(""); // Clear any previous messages
         setModalVisible(true);
@@ -161,9 +158,12 @@ const Airtime = () => {
                     {userMessage && <p className="text-danger">{userMessage}</p>}
 
                     <button disabled={submitting} type="submit" className="btn btn-primary">
-                        {submitting? (<span>Proceed</span>):(<span> Purchasing... <i className="spinner-border"></i></span>)
-                        }
-                   </button>
+                        {submitting ? (
+                            <span>Purchasing... <i className="spinner-border"></i></span>
+                        ) : (
+                            <span>Proceed</span>
+                        )}
+                    </button>
                 </form>
             </div>
 
@@ -204,3 +204,4 @@ const Airtime = () => {
 };
 
 export default Airtime;
+
