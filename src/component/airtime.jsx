@@ -159,7 +159,7 @@ const Airtime = () => {
 
                     <button disabled={submitting} type="submit" className="btn btn-primary">
                         {submitting ? (
-                            <span>Purchasing... <i className="spinner-border"></i></span>
+                            <span>Purchasing... <i className="spinner-border spinner-border-sm"></i></span>
                         ) : (
                             <span>Proceed</span>
                         )}
@@ -204,4 +204,3 @@ const Airtime = () => {
 };
 
 export default Airtime;
-
