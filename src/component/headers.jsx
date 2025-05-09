@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./dashed.css";
 
 import Actions from "./actionNav";
+import { Modal } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import axiosInstance from "./utility";
 
@@ -346,6 +348,21 @@ const Header = () => {
     </div>
 
   </div>
+     <Modal show={showModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>You're Honoured!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h4>Welcome to our website!</h4>
+          <p>We are truly honoured to have you here. Thank you for visiting!</p>
+          <p>Enjoy exploring, and feel free to reach out if you have any questions!</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
      <DownNav />
 
