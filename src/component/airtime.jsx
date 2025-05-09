@@ -19,6 +19,8 @@ const Airtime = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [submitting, isSubmit] = useState(false);
+    
     
 
     useEffect(() => {
@@ -60,6 +62,7 @@ const Airtime = () => {
     };
 
     const sendData = async () => {
+        isSubmit(true);
         let formData = {
             network,
             phone,
@@ -80,6 +83,7 @@ const Airtime = () => {
                 setTransactionStatus("success");
                 setResponseMessage(response.data.message);
             } else {
+                
                 setTransactionStatus("error");
                 setResponseMessage("Failed to buy data. Please try again.");
             }
@@ -89,6 +93,7 @@ const Airtime = () => {
             setTransactionStatus("error");
             setResponseMessage("Failed to Perform Transaction. Please try again.");
         } finally {
+            isSubmit(false);
             setResponseModalVisible(true); // Show transaction response modal
         }
     };
