@@ -12,6 +12,7 @@ const Signup = () => {
   const [error, setError] = useState('');
   const [remember, setRemember] = useState(false);
   const [submitting, isSubmit] = useState(false);
+
   // Function to check if the token is expired
   const isTokenExpired = () => {
     const accessToken = localStorage.getItem('access_token');
@@ -56,7 +57,6 @@ const Signup = () => {
       const response = await axios.post('https://paystar.com.ng/api/register/', userData, {
         headers: {
           'Content-Type': 'application/json',
-          // Optional: You can pass the Authorization header if needed
         },
       });
 
@@ -81,103 +81,103 @@ const Signup = () => {
 
   return (
     <div className="body">
-            <div className="login-container">
-                <h2>Login</h2>
-                {error && <p style={{ color: "red" }}>{error}</p>}
-                <form id="loginForm" onSubmit={handleSubmit}>
-                    <div className="input-group">
-                        <input
-                            type="text"
-                            onChange={(e) => setUsername(e.target.value)}
-                            id="username"
-                            required
-                            placeholder=" "
-                            name="username"
-                        />
-                        <label htmlFor="username">Username</label>
-                    </div>
-                  <div className="input-group">
-                        <input
-                            type="number"
-                            onChange={(e) => setPhone(e.target.value)}
-                            id="phone"
-                            required
-                            placeholder=" "
-                            name="phone"
-                        />
-                        <label htmlFor="phone">phone</label>
-                    </div>
-                  <div className="input-group">
-                        <input
-                            type="email"
-                            onChange={(e) => setEmail(e.target.value)}
-                            id="email"
-                            required
-                            placeholder=" "
-                            name="email"
-                        />
-                        <label htmlFor="email">Email</label>
-                    </div>
-                   <div className="input-group">
-                        <input
-                            type="text"
-                            onChange={(e) => setFullname(e.target.value)}
-                            id="fullname"
-                            required
-                            placeholder=" "
-                            name="fullname"
-                        />
-                        <label htmlFor="fullname">FullName</label>
-                    </div>
-                    <div className="input-group">
-                        <input
-                            name="password"
-                            onChange={(e) => setPassword(e.target.value)}
-                            type="password"
-                            id="password"
-                            required
-                            placeholder=" "
-                        />
-                        <label htmlFor="password">Password</label>
-                    </div>
-                    <div className="remember-forgot">
-                        <label>
-                            <input
-                                type="checkbox"
-                                name="remember"
-                                checked={remember}
-                                onChange={(e) => setRemember(e.target.checked)}
-                            />
-                            Remember me
-                        </label>
-                        <a href="https://paystar.com.ng/accounts/password/reset/">Forgot Password?</a>
-                    </div>
-                    <button 
-                       disabled={submitting} 
-                       type="submit" 
-                       className="login-btn" 
-                       id="loginBtn"
->
-                       {submitting ? (
-                       <span className="login-auth">
-                        Authenticating <i className="spinner-border"></i>
-                       </span>
-                    ) : (
-                       <span className="login-lg">Login</span>
-                    )}
-                </button>
-
-                </form>
-              <div className="text-danger text-center">
-                { error }
-              </div>
-                <div className="terms">
-                    By logging in, you agree to our <a href="https://paystar.com.ng/terms">Terms and Conditions</a>.
-                </div>
-                <div className="signup-link">
-                    Already have an account? <Link to="/login/">Login</Link>
-                </div>
-            </div>
+      <div className="login-container">
+        <h2>Login</h2>
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        <form id="loginForm" onSubmit={handleSubmit}>
+          <div className="input-group">
+            <input
+              type="text"
+              onChange={(e) => setUsername(e.target.value)}
+              id="username"
+              required
+              placeholder=" "
+              name="username"
+            />
+            <label htmlFor="username">Username</label>
+          </div>
+          <div className="input-group">
+            <input
+              type="number"
+              onChange={(e) => setPhone(e.target.value)}
+              id="phone"
+              required
+              placeholder=" "
+              name="phone"
+            />
+            <label htmlFor="phone">Phone</label>
+          </div>
+          <div className="input-group">
+            <input
+              type="email"
+              onChange={(e) => setEmail(e.target.value)}
+              id="email"
+              required
+              placeholder=" "
+              name="email"
+            />
+            <label htmlFor="email">Email</label>
+          </div>
+          <div className="input-group">
+            <input
+              type="text"
+              onChange={(e) => setFullname(e.target.value)}
+              id="fullname"
+              required
+              placeholder=" "
+              name="fullname"
+            />
+            <label htmlFor="fullname">FullName</label>
+          </div>
+          <div className="input-group">
+            <input
+              name="password"
+              onChange={(e) => setPassword(e.target.value)}
+              type="password"
+              id="password"
+              required
+              placeholder=" "
+            />
+            <label htmlFor="password">Password</label>
+          </div>
+          <div className="remember-forgot">
+            <label>
+              <input
+                type="checkbox"
+                name="remember"
+                checked={remember}
+                onChange={(e) => setRemember(e.target.checked)}
+              />
+              Remember me
+            </label>
+            <a href="https://paystar.com.ng/accounts/password/reset/">Forgot Password?</a>
+          </div>
+          <button 
+            disabled={submitting} 
+            type="submit" 
+            className="login-btn" 
+            id="loginBtn"
+          >
+            {submitting ? (
+              <span className="login-auth">
+                Authenticating 
+                <i className="spinner-border spinner-border-sm"></i>
+              </span>
+            ) : (
+              <span className="login-lg">Login</span>
+            )}
+          </button>
+        </form>
+        <div className="text-danger text-center">
+          { error }
+        </div>
+        <div className="terms">
+          By logging in, you agree to our <a href="https://paystar.com.ng/terms">Terms and Conditions</a>.
+        </div>
+        <div className="signup-link">
+          Already have an account? <Link to="/login/">Login</Link>
+        </div>
+      </div>
     </div>
   );
 };
