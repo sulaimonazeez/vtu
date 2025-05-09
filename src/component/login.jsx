@@ -9,8 +9,8 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [remember, setRemember] = useState(false);
+    const [submitting, setSubmitting] = useState(false); // Renamed for clarity
     const navigate = useNavigate();
-    const [submitting, isSubmit] = useState(false);
     const API_URL = "https://paystar.com.ng/api/login/";
 
     // Check if the user is already authenticated (i.e., has a valid access token)
@@ -24,21 +24,15 @@ const Login = () => {
         }
     }, [navigate]);
 
-
-
     const handleLogin = async (e) => {
         e.preventDefault();
-        isSubmit(true);
-        const userCredentials = {
-            username,
-            password,
-        };
+        setSubmitting(true); // Start the loading state
+
+        const userCredentials = { username, password };
 
         try {
             const response = await axios.post(API_URL, userCredentials, {
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                headers: { "Content-Type": "application/json" },
             });
 
             const { access_token, refresh_token, expires_in } = response.data;
@@ -55,7 +49,8 @@ const Login = () => {
             navigate("/home"); // Redirect to home or dashboard after successful login
         } catch (error) {
             setError(error.response ? error.response.data.message : error.message);
-            isSubmit(false)
+        } finally {
+            setSubmitting(false); // Reset loading state
         }
     };
 
@@ -100,12 +95,13 @@ const Login = () => {
                         <a href="/accounts/password/reset/">Forgot Password?</a>
                     </div>
                     <button disabled={submitting} type="submit" className="login-btn" id="loginBtn">
-                        {submitting? (
-                           <span className="login-aut">Authenticating <i className="spinner-border"></i></span>
-                            ):(
-                             <span className="login-lg">Login</span>
-                            )
-                        }
+                        {submitting ? (
+                            <span className="login-aut">
+                                Authenticating <i className="spinner-border"></i>
+                            </span>
+                        ) : (
+                            <span className="login-lg">Login</span>
+                        )}
                     </button>
                 </form>
                 <div className="terms">
