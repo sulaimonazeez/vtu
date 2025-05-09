@@ -99,7 +99,7 @@ const Login = () => {
                         </label>
                         <a href="/accounts/password/reset/">Forgot Password?</a>
                     </div>
-                    <button disable={submitting} type="submit" className="login-btn" id="loginBtn">
+                    <button disabled={submitting} type="submit" className="login-btn" id="loginBtn">
                         {submitting? (
                            <span className="login-lg">Login</span>
                             ):(
