@@ -101,9 +101,9 @@ const Login = () => {
                     </div>
                     <button disabled={submitting} type="submit" className="login-btn" id="loginBtn">
                         {submitting? (
-                           <span className="login-lg">Login</span>
+                           <span className="login-aut">Authenticating <i className="spinner-border"></i></span>
                             ):(
-                             <span className="login-aut">Authenticating <i className="spinner-border"></i></span>
+                             <span className="login-lg">Login</span>
                             )
                         }
                     </button>
