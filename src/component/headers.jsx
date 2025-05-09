@@ -30,7 +30,14 @@ const Header = () => {
   const [bankName, setBankName] = useState("");
 
   const [status, isStatus] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
+  // Function to close the modal
+  const handleClose = () => setShowModal(false);
+
+  useEffect(() => {
+    setShowModal(true);
+  }, []);
   
 
   
