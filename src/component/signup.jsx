@@ -152,13 +152,21 @@ const Signup = () => {
                         </label>
                         <a href="https://paystar.com.ng/accounts/password/reset/">Forgot Password?</a>
                     </div>
-                    <button disabled={submitting} type="submit" className="login-btn" id="loginBtn">
-                      {submitting? (
-                         <span className="login-lg">Login</span>
-                      ):(
-                        <span className="login-auth">Authenticating <i className="spinner-border"></i></span>
-                     )
-                    </button>
+                    <button 
+                       disabled={submitting} 
+                       type="submit" 
+                       className="login-btn" 
+                       id="loginBtn"
+>
+                       {submitting ? (
+                       <span className="login-auth">
+                        Authenticating <i className="spinner-border"></i>
+                       </span>
+                    ) : (
+                       <span className="login-lg">Login</span>
+                    )}
+                </button>
+
                 </form>
               <div className="text-danger text-center">
                 { error }
