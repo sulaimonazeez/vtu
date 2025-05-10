@@ -144,9 +144,9 @@ const Header = () => {
 
       } else {
 
-        const accessToken = localStorage.removeItem("access_token");
+        localStorage.removeItem("access_token");
 
-        const expiresIn = localStorage.removeItem("expires_in");
+        localStorage.removeItem("expires_in");
 
 
       }
