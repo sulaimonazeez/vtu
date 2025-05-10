@@ -1,40 +1,47 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./css/airtime.css";
+import "./css/airtime.css"; // Assuming this is correct
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import DownNav from "./downNav";
+
+// --- FIX 1: Import axiosInstance instead of plain axios ---
+import axiosInstance from "./utility"; // Adjust path as needed
+// --- ADDED: Import logout utility if needed for specific error handling ---
+import { logout } from "./auth"; // Adjust path as needed
+
+import DownNav from "./downNav"; // Assuming this is correct
 
 const Airtime = () => {
     const [network, setNetwork] = useState("");
     const [amount, setAmount] = useState("");
     const [phone, setPhone] = useState("");
     const [pin, setPin] = useState("");
-    const [userMessage, setUserMessage] = useState("");
-    const [modalVisible, setModalVisible] = useState(false);
-    const [responseModalVisible, setResponseModalVisible] = useState(false);
-    const [transactionStatus, setTransactionStatus] = useState("");
-    const [message, setResponseMessage] = useState("");
+    const [userMessage, setUserMessage] = useState(""); // For form-level messages
+    const [modalVisible, setModalVisible] = useState(false); // For PIN entry modal
+    const [responseModalVisible, setResponseModalVisible] = useState(false); // For transaction response modal
+    const [transactionStatus, setTransactionStatus] = useState(""); // 'success' or 'error'
+    const [message, setResponseMessage] = useState(""); // Message for transaction response modal
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState("");
-    const [submitting, setSubmitting] = useState(false);
+    const [loading, setLoading] = useState(false); // General loading state for operations
+    // const [error, setError] = useState(""); // Removed: Use `message` or a separate state for API errors
+    const [submitting, setSubmitting] = useState(false); // Specific loading state for form submission
 
+    // --- FIX 1: REMOVE THIS ENTIRE useEffect BLOCK FOR MANUAL TOKEN REFRESH ---
+    // The axiosInstance interceptor handles token refreshing automatically and securely.
+    // Storing refresh_token in localStorage is a security vulnerability.
+    /*
     useEffect(() => {
         const myRefresh = async () => {
             try {
-                const refreshToken = localStorage.getItem("refresh_token");
+                const refreshToken = localStorage.getItem("refresh_token"); // CRITICAL: REFRESH TOKEN SHOULD NOT BE IN LOCALSTORAGE
                 const res = await axios.post("https://paystar.com.ng/api/token/refresh/", {
                     refresh: refreshToken,
                 });
-
-                // Store new access token
                 localStorage.setItem("access_token", res.data.access);
             } catch (e) {
                 console.error("Refresh token failed, logging out.");
-                localStorage.removeItem("access_token");
-                localStorage.removeItem("refresh_token");
+                localStorage.removeItem("access_token"); // Removes access token
+                localStorage.removeItem("refresh_token"); // Tries to remove refresh token which shouldn't be there
                 navigate("/login");
             }
         };
@@ -42,14 +49,14 @@ const Airtime = () => {
         const accessToken = localStorage.getItem("access_token");
         const expiresIn = localStorage.getItem("expires_in");
 
-        // If access token exists and has not expired, redirect to home page
-        if (accessToken && expiresIn && Date.now() < expiresIn) {
+        if (accessToken && expiresIn && Date.now() < parseInt(expiresIn)) { // Added parseInt
             console.log("Token Valid");
         } else {
             myRefresh();
         }
-
     }, [navigate]);
+    */
+    // The above useEffect is replaced by the automatic refresh mechanism in `axiosInstance`.
 
     const handleNetworkChange = (e) => {
         setNetwork(e.target.value);
@@ -59,43 +66,51 @@ const Airtime = () => {
         setAmount(e.target.value);
     };
 
+    // --- FIX 2 & 5: Use axiosInstance for API call ---
     const sendData = async () => {
-        setSubmitting(true); // Start loading
+        setSubmitting(true); // Start loading for actual data submission
         let formData = {
             network,
             phone,
             amount,
+            // If your backend expects the PIN here for validation, add it:
+            // pin: pin,
         };
 
         try {
-            const accessToken = localStorage.getItem("access_token");
-            const response = await axios.post("https://paystar.com.ng/airtime/api/", formData, {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                    "Content-Type": "application/json",
-                },
-            });
+            // --- CRITICAL FIX: Use axiosInstance.post ---
+            // axiosInstance automatically adds Authorization header, handles withCredentials,
+            // and transparently refreshes tokens if needed.
+            const response = await axiosInstance.post("/airtime/api/", formData); // Using relative path due to baseURL in axiosInstance
 
-            //console.log("Response:", response);
+            console.log("Response:", response.data);
             if (response.data.status === "success" || response.data.status === "pending") {
                 setTransactionStatus("success");
                 setResponseMessage(response.data.message);
+                // Clear form fields on success
+                setNetwork("");
+                setAmount("");
+                setPhone("");
             } else {
                 setTransactionStatus("error");
-                setResponseMessage("Failed to buy data. Please try again.");
+                setResponseMessage(response.data.message || "Failed to buy airtime. Please try again.");
             }
         } catch (error) {
-            console.error("Error:", error);
-            setError(error);
+            console.error("Error during airtime purchase:", error.response?.data || error.message);
             setTransactionStatus("error");
-            setResponseMessage("Failed to Perform Transaction. Please try again.");
+            // The interceptor handles 401s and redirects to login.
+            // Errors caught here are usually non-authentication issues (e.g., 400, 500).
+            setResponseMessage(error.response?.data?.detail || error.response?.data?.error || "Failed to perform transaction. Please try again.");
+            // If a global logout function is needed for unhandled critical auth errors not caught by interceptor:
+            // if (error.response?.status === 401 && !error.config.__isRetryRequest) { logout(); }
         } finally {
             setSubmitting(false); // End loading
             setResponseModalVisible(true); // Show transaction response modal
         }
     };
 
-    const handlePhone = (e) => {
+    // --- FIX 4: Move onChange to the input tag ---
+    const handlePhoneChange = (e) => {
         setPhone(e.target.value);
     };
 
@@ -103,14 +118,28 @@ const Airtime = () => {
         setPin(e.target.value.slice(0, 4)); // Ensures PIN is max 4 digits
     };
 
-    const submitPin = () => {
-        if (pin === "1111") {
-            setModalVisible(false);
-            sendData();
-            setPin("");
-        } else {
-            setUserMessage("Incorrect Pin");
-            setPin("");
+    // --- FIX 3: PIN VALIDATION MUST BE DONE ON BACKEND ---
+    const submitPin = async () => {
+        setSubmitting(true); // Indicate PIN submission is in progress
+        setUserMessage(""); // Clear previous messages
+        try {
+            // --- Replace with API call to backend for PIN validation ---
+            // Example:
+            const response = await axiosInstance.post("/validate-pin/", { pin: pin }); // Your actual backend endpoint
+            if (response.data.isValid) { // Assuming backend returns { isValid: true/false }
+                setModalVisible(false); // Close PIN modal
+                sendData(); // Proceed with airtime purchase
+                setPin(""); // Clear PIN
+            } else {
+                setUserMessage(response.data.message || "Incorrect PIN. Please try again.");
+                setPin(""); // Clear PIN for retry
+            }
+        } catch (error) {
+            console.error("PIN validation failed:", error.response?.data || error.message);
+            setUserMessage(error.response?.data?.message || "PIN validation error. Please try again.");
+            setPin(""); // Clear PIN for retry
+        } finally {
+            setSubmitting(false); // End PIN submission loading
         }
     };
 
@@ -129,7 +158,7 @@ const Airtime = () => {
     return (
         <div className="bodys">
             <div className="container spacing">
-                <h2 className="text-center mb-4">Buy Data</h2>
+                <h2 className="text-center mb-4">Buy Airtime</h2> {/* Changed title to Airtime */}
                 <div className="text-center d-flex justify-content-evenly network-icons mb-3">
                     <img onClick={() => setNetwork("airtel")} style={{ width: "15%", height: "14vw" }} id="airtel" src="https://paystar.com.ng/static/airtel.png" alt="Airtel" />
                     <img onClick={() => setNetwork("mtn")} style={{ width: "15%", height: "14vw" }} id="mtn" src="https://paystar.com.ng/static/mtn.png" alt="MTN" />
@@ -147,8 +176,9 @@ const Airtime = () => {
                         </select>
                     </div>
 
-                    <div className="form-group" onChange={handlePhone}>
-                        <input placeholder="Phone Number" value={phone} type="tel" className="form-control" required />
+                    <div className="form-group">
+                        {/* FIX 4: onChange moved to input tag */}
+                        <input placeholder="Phone Number" value={phone} type="tel" className="form-control" onChange={handlePhoneChange} required />
                     </div>
 
                     <div className="form-group">
@@ -179,7 +209,7 @@ const Airtime = () => {
                     {userMessage && <p className="text-danger">{userMessage}</p>}
                 </Modal.Body>
                 <Modal.Footer>
-                    <button className="btn btn-primary" onClick={submitPin}>Submit</button>
+                    <button className="btn btn-primary" onClick={submitPin} disabled={submitting}>Submit</button>
                 </Modal.Footer>
             </Modal>
 
