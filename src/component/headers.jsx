@@ -5,12 +5,12 @@ import Actions from "./actionNav"; // Assuming this is correct path
 import { Modal, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import axiosInstance from "../requestUtility"; // <-- FIX 1: Adjust path to requestUtility.jsx
+import axiosInstance from "./utility"; // <-- FIX 1: Adjust path to requestUtility.jsx
 
 import { useNavigate, Link } from "react-router-dom";
 
 import axios from "axios"; // <-- REMOVE 2: You should primarily use axiosInstance
-import { logout } from '../utils/auth'; // <-- ADD 3: Import logout utility for proper redirection
+import { logout } from './auth.js'; // <-- ADD 3: Import logout utility for proper redirection
 
 import Transaction from "./transactions"; // Assuming this is correct path
 
