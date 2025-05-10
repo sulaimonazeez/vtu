@@ -134,7 +134,7 @@ const BuyDataForm = () => {
             // Example:
             const response = await axiosInstance.post("/validate-pin/", { pin: pin }); // Replace with your actual backend endpoint
             
-            if (response.data.isValid) { // Assuming your backend returns { isValid: true, message: "..." }
+            if (response.data.data === "success") { // Assuming your backend returns { isValid: true, message: "..." }
                 setModalVisible(false); // Close PIN modal
                 sendData(); // Proceed with data purchase if PIN is valid
                 setPin(""); // Clear PIN after successful validation
