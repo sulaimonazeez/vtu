@@ -6,6 +6,7 @@ import './NINSubmission.css';
 export default function NINSubmission() {
   const [nin, setNin] = useState('');
   const [loading, setLoading] = useState(false);
+  const [error, setError ] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,13 +28,17 @@ export default function NINSubmission() {
 
     try {
       const token = localStorage.getItem('access_token');
-      await axios.post('/api/submit-nin', { nin }, {
+      const response = await axios.post('https://paystar.com.ng/api/submit-nin', { nin }, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
-      alert('NIN submitted successfully');
+      if (response.data.status === "success"){
+          navigate("/home");
+      } else {
+         setError(response.data.message);
+      }
     } catch (error) {
-      alert('Failed to submit NIN');
+      setError(response.data.message)
     } finally {
       setLoading(false);
     }
@@ -57,7 +62,7 @@ export default function NINSubmission() {
             className={`nin-button ${loading ? 'loading' : ''}`} 
             disabled={loading}
           >
-            {loading ? 'Submitting...' : 'Submit NIN'}
+            {loading ? <span className="spinner-border spinner-border-sm"></span> : 'Submit NIN'}
           </button>
         </form>
       </div>
