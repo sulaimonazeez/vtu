@@ -35,14 +35,13 @@ const Login = () => {
                 headers: { "Content-Type": "application/json" },
             });
 
-            const { access_token, refresh_token, expires_in } = response.data;
+            const { access_token, expires_in } = response.data;
 
             // Calculate expiry time in milliseconds and store in localStorage
             const expiresAt = Date.now() + expires_in * 1000;
 
             // Store the tokens and expiry time in localStorage
             localStorage.setItem("access_token", access_token);
-            localStorage.setItem("refresh_token", refresh_token);
             localStorage.setItem("expires_in", expiresAt);
 
             alert("Login Successful!");
