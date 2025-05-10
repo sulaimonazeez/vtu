@@ -126,7 +126,7 @@ const Airtime = () => {
             // --- Replace with API call to backend for PIN validation ---
             // Example:
             const response = await axiosInstance.post("/validate-pin/", { pin: pin }); // Your actual backend endpoint
-            if (response.data.isValid === "success") { // Assuming backend returns { isValid: true/false }
+            if (response.data.status === "success") { // Assuming backend returns { isValid: true/false }
                 setModalVisible(false); // Close PIN modal
                 sendData(); // Proceed with airtime purchase
                 setPin(""); // Clear PIN
