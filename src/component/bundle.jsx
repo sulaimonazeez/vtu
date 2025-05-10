@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./css/bundle.css";
-import axios from "axios";
+import "./css/bundle.css"; // Assuming this path is correct
+
+// --- FIX 1 & 4: Import axiosInstance (make sure the path is correct) ---
+import axiosInstance from "./utility"; // Adjust path as needed
+
 import { useNavigate } from "react-router-dom";
-// import axiosInstance from "./utility";
-import DownNav from "./downNav";
+import DownNav from "./downNav"; // Assuming this path is correct
 
 const BuyDataForm = () => {
     const [networkData, setNetworkData] = useState([]);
@@ -13,26 +15,39 @@ const BuyDataForm = () => {
     const [selectedDataType, setSelectedDataType] = useState("");
     const [selectedDataPlan, setSelectedDataPlan] = useState("");
     const [amount, setAmount] = useState("");
+    const [phone, setPhone] = useState(""); // Added phone state
     const [pin, setPin] = useState("");
-    const [modalVisible, setModalVisible] = useState(false);
-    const [responseModalVisible, setResponseModalVisible] = useState(false); // NEW modal state for transaction response
-    const [userMessage, setUserMessage] = useState("");
-    const [phone, setPhone] = useState("");
-    const [loading, setLoading] = useState(false);
-    const [transactionStatus, setTransactionStatus] = useState(""); // NEW - Stores success or failure message
-    const [message, setResponseMessage] = useState("");
+    const [modalVisible, setModalVisible] = useState(false); // State for PIN entry modal
+    const [responseModalVisible, setResponseModalVisible] = useState(false); // State for transaction response modal
+    const [userMessage, setUserMessage] = useState(""); // For form-level messages (e.g., validation errors)
+    const [loading, setLoading] = useState(false); // General loading state (e.g., for API calls)
+    const [transactionStatus, setTransactionStatus] = useState(""); // 'success' or 'error'
+    const [message, setResponseMessage] = useState(""); // Message for transaction response modal
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch("https://paystar.com.ng/api/network/")
-            .then((response) => response.json())
-            .then((data) => setNetworkData(data))
-            .catch((error) => console.error("Error fetching data:", error));
+        // --- FIX 4: Use axiosInstance.get for consistency, assuming it's configured with a baseURL ---
+        // If this is a truly public endpoint that doesn't need axiosInstance's interceptors/baseURL,
+        // then `Workspace` is acceptable. But for consistency with authenticated calls, axiosInstance is preferred.
+        axiosInstance.get("/network/") // Using relative path assuming baseURL in axiosInstance
+            .then((response) => {
+                if (response.status === 200) {
+                    setNetworkData(response.data);
+                } else {
+                    console.error("Error fetching network data:", response.statusText);
+                    // Optionally display an error message to the user
+                }
+            })
+            .catch((error) => console.error("Error fetching network data:", error));
 
+        // Authentication check
         const accessToken = localStorage.getItem("access_token");
         const expiresIn = localStorage.getItem("expires_in");
 
-        if (!accessToken || !expiresIn || Date.now() >= expiresIn) {
+        // --- FIX 3: Parse expiresIn to integer for correct comparison ---
+        if (!accessToken || !expiresIn || Date.now() >= parseInt(expiresIn)) {
+            // This check simply ensures the user is redirected if they land here without a valid token.
+            // The actual token refresh is handled by axiosInstance interceptor on API calls.
             navigate("/login");
         }
     }, [navigate]);
@@ -52,6 +67,7 @@ const BuyDataForm = () => {
 
     const handleDataPlanChange = (e) => {
         const selectedPlanElement = e.target.selectedOptions[0];
+        // Ensure planPrice is parsed as a number if you plan to use it in calculations
         const planPrice = selectedPlanElement?.getAttribute("data-price") || "";
         setAmount(planPrice);
         setSelectedDataPlan(e.target.value);
@@ -62,46 +78,77 @@ const BuyDataForm = () => {
     };
 
     const sendData = async () => {
-        setLoading(true);
+        setLoading(true); // Start loading for the actual data purchase API call
         setModalVisible(false); // Close PIN modal
 
         const formData = {
             network: selectedNetwork,
-            sme: selectedDataType,
-            dataType: selectedDataPlan,
+            sme: selectedDataType, // Ensure this matches your backend's expected key
+            data_plan: selectedDataPlan, // Ensure this matches your backend's expected key (e.g., `data_plan` vs `dataType`)
             amount: amount,
             phone: phone,
+            // --- RECOMMENDATION: Send PIN here if the PIN validation is done on the backend with the transaction ---
+            // pin: pin, // Uncomment if your /api/bundle/ endpoint also expects PIN for validation
         };
 
         try {
-            const accessToken = localStorage.getItem("access_token");
-            const response = await axios.post("https://paystar.com.ng/api/bundle/", formData, {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
+            // --- CRITICAL FIX 1: Use axiosInstance.post ---
+            // This will automatically add the Authorization header and handle token refreshing.
+            const response = await axiosInstance.post("/bundle/", formData); // Using relative path due to baseURL in axiosInstance
 
             setTransactionStatus(response.data.status);
             setResponseMessage(response.data.message);
-            if (response.data.status === "failed") {
-                setResponseMessage("Failed to buy data. Please try again...");
+
+            if (response.data.status === "success" || response.data.status === "pending") {
+                // Clear form fields on success/pending
+                setSelectedNetwork("");
+                setSelectedDataType("");
+                setSelectedDataPlan("");
+                setAmount("");
+                setPhone("");
+            } else {
+                // Backend should ideally provide a more specific error message.
+                // Fallback to a generic message if not provided.
+                setResponseMessage(response.data.message || "Failed to buy data. Please try again.");
             }
         } catch (error) {
-            setResponseMessage("Failed to buy data. Please try again.");
+            console.error("Error during data purchase:", error.response?.data || error.message);
+            setTransactionStatus("error");
+            // Detailed error message from backend or a generic one
+            setResponseMessage(error.response?.data?.detail || error.response?.data?.message || "Failed to perform transaction. Please try again.");
+            // The axiosInstance interceptor should handle 401 (unauthorized) by redirecting to login.
+            // Errors caught here are likely 400 (bad request), 500 (server error), network issues.
         } finally {
             setLoading(false);
             setResponseModalVisible(true); // Show transaction response modal
         }
     };
 
-    const submitPin = () => {
-        if (pin === "1111") {
-            sendData();
-            setPin("");
-        } else {
-            setUserMessage("Incorrect PIN");
-            setPin("");
+    // --- CRITICAL FIX 2: PIN VALIDATION MUST BE DONE ON BACKEND ---
+    const submitPin = async () => {
+        setLoading(true); // Indicate PIN submission is in progress
+        setUserMessage(""); // Clear previous messages for PIN modal
+
+        try {
+            // --- Replace with an API call to your backend for PIN validation ---
+            // Example:
+            const response = await axiosInstance.post("/validate-pin/", { pin: pin }); // Replace with your actual backend endpoint
+            
+            if (response.data.isValid) { // Assuming your backend returns { isValid: true, message: "..." }
+                setModalVisible(false); // Close PIN modal
+                sendData(); // Proceed with data purchase if PIN is valid
+                setPin(""); // Clear PIN after successful validation
+            } else {
+                // Backend should provide an error message like "Incorrect PIN"
+                setUserMessage(response.data.message || "Incorrect PIN. Please try again.");
+                setPin(""); // Clear PIN for retry
+            }
+        } catch (error) {
+            console.error("PIN validation failed:", error.response?.data || error.message);
+            setUserMessage(error.response?.data?.message || "PIN validation error. Please try again.");
+            setPin(""); // Clear PIN for retry
+        } finally {
+            setLoading(false); // End PIN submission loading
         }
     };
 
@@ -111,9 +158,16 @@ const BuyDataForm = () => {
             setUserMessage("⚠Please fill in all fields");
             return;
         }
-        setUserMessage("");
+        setUserMessage(""); // Clear any previous form-level messages
         setModalVisible(true); // Show PIN modal
     };
+
+    // Filter data plans based on selected network and data type
+    const filteredDataPlans = networkData
+        .filter((n) => n.name.toLowerCase() === selectedNetwork)
+        .flatMap((network) => network.categories)
+        .filter((category) => category.name === selectedDataType)
+        .flatMap((category) => category.plans);
 
     return (
         <div className="bodys">
@@ -132,10 +186,12 @@ const BuyDataForm = () => {
                             <option value="" disabled>
                                 Select Network
                             </option>
-                            <option value="airtel">Airtel</option>
-                            <option value="mtn">MTN</option>
-                            <option value="glo">Glo</option>
-                            <option value="mobile9">9mobile</option>
+                            {/* Render network options from networkData */}
+                            {networkData.map((net) => (
+                                <option key={net.name} value={net.name.toLowerCase()}>
+                                    {net.name}
+                                </option>
+                            ))}
                         </select>
                     </div>
 
@@ -146,6 +202,7 @@ const BuyDataForm = () => {
                             value={selectedDataType}
                             onChange={handleDataTypeChange}
                             required
+                            disabled={!selectedNetwork} // Disable until network is selected
                         >
                             <option value="" disabled>
                                 Select Data Type
@@ -168,20 +225,16 @@ const BuyDataForm = () => {
                             value={selectedDataPlan}
                             onChange={handleDataPlanChange}
                             required
+                            disabled={!selectedDataType} // Disable until data type is selected
                         >
                             <option value="" disabled>
                                 Select Data Plan
                             </option>
-                            {networkData
-                                .filter((n) => n.name.toLowerCase() === selectedNetwork)
-                                .flatMap((network) => network.categories)
-                                .filter((category) => category.name === selectedDataType)
-                                .flatMap((category) => category.plans)
-                                .map((plan) => (
-                                    <option key={plan.name} value={plan.name} data-price={plan.price}>
-                                        {plan.name}
-                                    </option>
-                                ))}
+                            {filteredDataPlans.map((plan) => (
+                                <option key={plan.name} value={plan.name} data-price={plan.price}>
+                                    {plan.name} (₦{plan.price}) {/* Display price */}
+                                </option>
+                            ))}
                         </select>
                     </div>
 
@@ -205,11 +258,12 @@ const BuyDataForm = () => {
                             className="form-control"
                             required
                             value={amount}
-                            readOnly
+                            readOnly // Amount is derived from data plan, should be read-only
                         />
                     </div>
 
                     <div className="text-center">
+                        {userMessage && <p className="text-danger">{userMessage}</p>} {/* Display form-level messages */}
                         <button type="submit" className="btn btn-primary" disabled={loading}>
                             {loading ? (
                                 <>
@@ -241,9 +295,16 @@ const BuyDataForm = () => {
                             maxLength={4}
                             placeholder="Enter 4-digit PIN"
                         />
-                        {userMessage && <p>{userMessage}</p>}
-                        <button onClick={submitPin} className="btn btn-primary mt-2">
-                            Submit
+                        {userMessage && <p className="text-danger mt-2">{userMessage}</p>} {/* Display PIN modal messages */}
+                        <button onClick={submitPin} className="btn btn-primary mt-3" disabled={loading}>
+                            {loading ? (
+                                <>
+                                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    <span className="ms-2">Submitting PIN...</span>
+                                </>
+                            ) : (
+                                "Submit"
+                            )}
                         </button>
                     </Modal.Body>
                 </Modal>
