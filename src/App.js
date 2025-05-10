@@ -12,11 +12,10 @@ import ProfileWrapper from "./component/profileWrapper.jsx";
 // Simple auth check (with token expiration handling)
 const isAuthenticated = () => {
   const accessToken = localStorage.getItem("access_token");
-  const refreshToken = localStorage.getItem("refresh_token");
   const expiresIn = localStorage.getItem("expires_in");
 
   // If no access token, no refresh token, or expired token, clear tokens and return false
-  if (!accessToken || !refreshToken || !expiresIn || Date.now() >= expiresIn) {
+  if (!accessToken || !expiresIn || Date.now() >= expiresIn) {
     clearTokens();
     return false;
   }
@@ -28,7 +27,6 @@ const isAuthenticated = () => {
 // Function to clear tokens from localStorage
 const clearTokens = () => {
   localStorage.removeItem("access_token");
-  localStorage.removeItem("refresh_token");
   localStorage.removeItem("expires_in");
 };
 
