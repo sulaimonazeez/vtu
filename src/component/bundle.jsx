@@ -297,14 +297,7 @@ const BuyDataForm = () => {
                         />
                         {userMessage && <p className="text-danger mt-2">{userMessage}</p>} {/* Display PIN modal messages */}
                         <button onClick={submitPin} className="btn btn-primary mt-3" disabled={loading}>
-                            {loading ? (
-                                <>
-                                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                    <span className="ms-2">Submitting PIN...</span>
-                                </>
-                            ) : (
-                                "Submit"
-                            )}
+                                Submit
                         </button>
                     </Modal.Body>
                 </Modal>
