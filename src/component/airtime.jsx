@@ -81,7 +81,7 @@ const Airtime = () => {
             // --- CRITICAL FIX: Use axiosInstance.post ---
             // axiosInstance automatically adds Authorization header, handles withCredentials,
             // and transparently refreshes tokens if needed.
-            const response = await axiosInstance.post("/airtime/api/", formData); // Using relative path due to baseURL in axiosInstance
+            const response = await axiosInstance.post("/airtime/", formData); // Using relative path due to baseURL in axiosInstance
 
             console.log("Response:", response.data);
             if (response.data.status === "success" || response.data.status === "pending") {
