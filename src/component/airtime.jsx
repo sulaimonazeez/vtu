@@ -84,7 +84,7 @@ const Airtime = () => {
             const response = await axiosInstance.post("/airtime/", formData); // Using relative path due to baseURL in axiosInstance
 
             console.log("Response:", response.data);
-            if (response.data.status === "success" || response.data.status === "pending") {
+            if (response.data.status || response.data.status === "pending") {
                 setTransactionStatus("success");
                 setResponseMessage(response.data.message);
                 // Clear form fields on success
@@ -126,7 +126,7 @@ const Airtime = () => {
             // --- Replace with API call to backend for PIN validation ---
             // Example:
             const response = await axiosInstance.post("/validate-pin/", { pin: pin }); // Your actual backend endpoint
-            if (response.data.isValid) { // Assuming backend returns { isValid: true/false }
+            if (response.data.isValid === "success") { // Assuming backend returns { isValid: true/false }
                 setModalVisible(false); // Close PIN modal
                 sendData(); // Proceed with airtime purchase
                 setPin(""); // Clear PIN
