@@ -43,7 +43,7 @@ const Signup = () => {
     try {
       // --- FIX 1: Use axiosInstance for the API call ---
       // axiosInstance handles baseURL, withCredentials, and potentially interceptors.
-      const response = await axiosInstance.post('/signup/', userData); // Assuming backend endpoint is /signup/
+      const response = await axiosInstance.post('/register/', userData); // Assuming backend endpoint is /signup/
 
       if (response.data.success) {
         // --- FIX 2: ONLY store access_token. Refresh token is an HttpOnly cookie. ---
