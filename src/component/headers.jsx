@@ -64,18 +64,7 @@ const Header = () => {
 
 
 
-        const response = await axios.get("https://paystar.com.ng/api/profile/", {
-
-          headers: {
-
-            Authorization: `Bearer ${accessToken}`,
-
-          },
-
-        });
-
-
-
+        const response = await axiosInstance.get("/profile/");
         setProfile(response.data);
 
         console.log("Profile Data:", response.data);
@@ -120,26 +109,7 @@ const Header = () => {
 
 
 
-        const response = await axiosInstance.get(
-
-          "/balance/",
-
-          {},
-
-          {
-
-            headers: {
-
-              Authorization: `Bearer ${accessToken}`,
-
-            },
-
-          }
-
-        );
-
-
-
+        const response = await axiosInstance.get("/balance/");
         setBalance(response.data.balance || 0);
 
         console.log("Balance Data:", response.data);
@@ -153,60 +123,12 @@ const Header = () => {
         // If token is invalid or expired, refresh token
 
         if (error.response && error.response.status === 401) {
-
-          await myRefresh();
-
-          fetchBalance(); // Retry after refresh
-
+          fetchBalance();
         }
 
       }
 
     };
-
-
-
-    const myRefresh = async () => {
-
-      try {
-
-        const refreshToken = localStorage.getItem("refresh_token");
-
-
-
-        const res = await axios.post("https://paystar.com.ng/api/token/refresh/", {
-
-          refresh: refreshToken,
-
-        });
-
-
-
-        // ✅ Update token & expiration time
-
-        localStorage.setItem("access_token", res.data.access);
-
-        localStorage.setItem("expires_in", Date.now() + 3600 * 1000); // 1-hour expiry
-
-
-
-        console.log("Token refreshed successfully");
-
-      } catch (e) {
-
-        console.error("Refresh token failed, logging out.");
-
-        localStorage.removeItem("access_token");
-
-        localStorage.removeItem("refresh_token");
-
-        navigate("/login");
-
-      }
-
-    };
-
-
 
     const checkTokenAndFetch = async () => {
 
@@ -222,7 +144,10 @@ const Header = () => {
 
       } else {
 
-        await myRefresh();
+        const accessToken = localStorage.removeItem("access_token");
+
+        const expiresIn = localStorage.removeItem("expires_in");
+
 
       }
 
