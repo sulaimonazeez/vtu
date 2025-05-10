@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "./utility";
+// --- FIX 1 & 2: Import axiosInstance (ensure path is correct for your project) ---
+import axiosInstance from "./utility"; // Assuming utility.js is in the same directory
 import DownNav from './downNav';
 import "./css/transaction.css";
-import axios from 'axios';
-import { Link } from 'react-router-dom'; // Import Link for navigation
+// Removed: axios is no longer needed directly for API calls, as axiosInstance is used
+// import axios from 'axios'; 
+import { Link } from 'react-router-dom';
 
 const AllTransaction = () => {
     const [history, setHistory] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [filteredHistory, setFilteredHistory] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null); // New state for error messages
     const navigate = useNavigate();
 
     const handleSearchChange = (e) => {
@@ -18,85 +21,54 @@ const AllTransaction = () => {
     };
 
     useEffect(() => {
-        // This function is responsible for fetching history
         const getHistory = async () => {
             try {
                 setLoading(true);
-                const accessToken = localStorage.getItem("access_token");
+                setError(null); // Clear previous errors
 
-                if (!accessToken) {
-                    console.error("No access token found, redirecting to login.");
-                    navigate("/login");
-                    return;
-                }
-
-                const response = await axiosInstance.get("/history/", {
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`, // Corrected syntax here
-                    },
-                });
+                // --- FIX 2: Removed manual Authorization header ---
+                // axiosInstance's interceptor handles adding the Authorization header automatically.
+                const response = await axiosInstance.get("/history/"); 
 
                 setHistory(response.data);
                 setFilteredHistory(response.data); // Set filtered history initially as all fetched history
             } catch (e) {
-                console.error("Error fetching history:", e);
+                console.error("Error fetching history:", e.response?.data || e.message);
+                // Provide user-friendly error message
+                setError("Failed to load transactions. Please try again later.");
+                // The axiosInstance interceptor should handle 401 Unauthorized errors by redirecting to login
+                // if the refresh token mechanism fails. No need for manual redirection here based on token presence,
+                // as the interceptor is the gatekeeper for authenticated requests.
             } finally {
                 setLoading(false);
             }
         };
 
-        // This function refreshes the access token using the refresh token
-        const myRefresh = async () => {
-            try {
-                const refreshToken = localStorage.getItem("refresh_token");
+        // --- FIX 1: Removed redundant and insecure token refresh logic ---
+        // The axiosInstance interceptor handles token refreshing automatically and securely.
+        // Storing refresh_token in localStorage is a security vulnerability.
+        // getHistory(); // Call the function directly
+        // --- IMPORTANT: Add an immediate call to getHistory() ---
+        // The component should try to fetch history immediately.
+        // The axiosInstance interceptor will handle token expiration and refresh.
+        getHistory();
 
-                if (!refreshToken) {
-                    console.error("No refresh token found.");
-                    navigate("/login");
-                    return;
-                }
+    }, []); // Empty dependency array means this runs once on mount. 
+            // If `history` needs to refetch on certain state changes, add them here.
+            // Since `Maps` is not used inside `getHistory` anymore, it's not a dependency.
 
-                const res = await axios.post("http://localhost:8000/api/token/refresh/", {
-                    refresh: refreshToken,
-                });
-
-                localStorage.setItem("access_token", res.data.access);
-                localStorage.setItem("expires_in", Date.now() + 3600 * 1000); // 1-hour expiry
-            } catch (e) {
-                console.error("Refresh token failed, logging out.");
-                localStorage.removeItem("access_token");
-                localStorage.removeItem("refresh_token");
-                navigate("/login");
-            }
-        };
-
-        // This function checks the token's validity and refreshes if necessary
-        const checkTokenAndFetch = async () => {
-            const accessToken = localStorage.getItem("access_token");
-            const expiresIn = localStorage.getItem("expires_in");
-
-            if (accessToken && expiresIn && Date.now() < expiresIn) {
-                getHistory(); // Access token is valid, fetch history
-            } else {
-                await myRefresh(); // Refresh token and then fetch history
-                getHistory();
-            }
-        };
-
-        checkTokenAndFetch(); // Call this function when the component mounts
-    }, [navigate]);
-
-    // New useEffect to handle filtering
+    // This useEffect handles filtering whenever searchQuery or history changes
     useEffect(() => {
         if (searchQuery) {
             const filtered = history.filter((data) =>
-                data.message.toLowerCase().includes(searchQuery.toLowerCase())
+                // Ensure 'message' field exists on your data objects
+                data.message && data.message.toLowerCase().includes(searchQuery.toLowerCase())
             );
             setFilteredHistory(filtered);
         } else {
             setFilteredHistory(history);
         }
-    }, [searchQuery, history]); // Only depend on searchQuery and history
+    }, [searchQuery, history]); // Dependencies: searchQuery and history
 
     return (
         <section className="transactions-container">
@@ -113,12 +85,15 @@ const AllTransaction = () => {
             </header>
 
             {loading ? (
-                <div className="loading">Loading...</div>
+                <div className="loading">Loading transactions...</div>
+            ) : error ? ( // Display error message if there's an error
+                <div className="error-message">{error}</div>
             ) : (
                 <div className="transactions-list">
                     {filteredHistory.length > 0 ? (
                         filteredHistory.map((data) => {
-                            const transactionLink = data.status_code
+                            // Assuming status_code is a boolean or truthy/falsy indicating success
+                            const transactionLink = data.status_code 
                                 ? `/history/${data.id}` // Use a template literal here
                                 : `/myreciept/${data.id}`;
                             const statusClass = data.status_code ? 'success' : 'failure';
@@ -128,7 +103,7 @@ const AllTransaction = () => {
                             return (
                                 <Link 
                                     key={data.id}
-                                    to={transactionLink} // Use Link to navigate
+                                    to={transactionLink} 
                                     className={`transaction-card ${statusClass}`} 
                                     title="View Transaction Details"
                                 >
@@ -141,7 +116,8 @@ const AllTransaction = () => {
                                         </div>
                                     </div>
                                     <div className="status-icon">
-                                        <i className={`fa ${statusIcon}`} aria-label={statusText}></i> 
+                                        {/* Added aria-hidden for decorative icons */}
+                                        <i className={`fa ${statusIcon}`} aria-label={statusText} aria-hidden="false"></i> 
                                     </div>
                                 </Link>
                             );
