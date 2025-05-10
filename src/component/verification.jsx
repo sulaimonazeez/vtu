@@ -38,7 +38,7 @@ export default function NINSubmission() {
          setError(response.data.message);
       }
     } catch (error) {
-      setError(response.data.message)
+      setError("Something Went Wrong");
     } finally {
       setLoading(false);
     }
