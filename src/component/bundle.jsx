@@ -84,7 +84,7 @@ const BuyDataForm = () => {
         const formData = {
             network: selectedNetwork,
             sme: selectedDataType, // Ensure this matches your backend's expected key
-            data_plan: selectedDataPlan, // Ensure this matches your backend's expected key (e.g., `data_plan` vs `dataType`)
+            dataType: selectedDataPlan, // Ensure this matches your backend's expected key (e.g., `data_plan` vs `dataType`)
             amount: amount,
             phone: phone,
             // --- RECOMMENDATION: Send PIN here if the PIN validation is done on the backend with the transaction ---
