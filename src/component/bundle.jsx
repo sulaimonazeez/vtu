@@ -173,7 +173,12 @@ const BuyDataForm = () => {
         <div className="bodys">
             <div className="container spacing">
                 <h2 className="text-center mb-4">Buy Data</h2>
-
+                <div className="text-center d-flex justify-content-evenly network-icons mb-3">
+                    <img onClick={() => setSelectedNetwork("airtel")} style={{ width: "15%", height: "14vw" }} id="airtel" src="https://paystar.com.ng/static/airtel.png" alt="Airtel" />
+                    <img onClick={() => setSelectedNetwork("mtn")} style={{ width: "15%", height: "14vw" }} id="mtn" src="https://paystar.com.ng/static/mtn.png" alt="MTN" />
+                    <img onClick={() => setSelectedNetwork("glo")} style={{ width: "15%", height: "14vw" }} id="glo" src="https://paystar.com.ng/static/glo.png" alt="Glo" />
+                    <img onClick={() => setSelectedNetwork("mobile9")} style={{ width: "15%", height: "14vw" }} id="9mobile" src="https://paystar.com.ng/static/9mobile.png" alt="9mobile" />
+                </div>
                 <form onSubmit={handleFormSubmit} noValidate>
                     <div className="form-group">
                         <select
