@@ -13,13 +13,13 @@ const Profile = ({user}) => {
           <div className="mb-4">
             <i className="fa fa-user-circle fa-5x text-primary"></i>
           </div>
-          <h2 className="card-title font-weight-bold">{user.firstName} {user.lastName}</h2>
-          <h5 className="text-muted">@{user.username}</h5>
+          <h2 className="card-title font-weight-bold">{user.firstName || "firstname"} {user.lastName || "lastname"}</h2>
+          <h5 className="text-muted">@{user.username || "@example"}</h5>
           <p className="mt-3">
-            <i className="fa fa-envelope"></i> {user.email}
+            <i className="fa fa-envelope"></i> {user.email || "example@gmail.com"}
           </p>
           <p>
-            <i className="fa fa-phone"></i> {user.phone}
+            <i className="fa fa-phone"></i> {user.phone || "08080891605"}
           </p>
         </div>
       </div>
