@@ -71,9 +71,10 @@ axiosInstance.interceptors.response.use(
           // The browser automatically sends the 'refresh_token' HttpOnly cookie.
           // No need to send refresh token in the request body from client-side.
           const response = await axiosInstance.post('/token/refresh/');
-          const newAccessToken = response.data.access;
+          const newAccessToken = response.data.access_token;
+          const expiresAt = response.data.expires_in
           localStorage.setItem('access_token', newAccessToken); // Update access token
-
+          localStorage.setItem("expires_in", expiresAt.toString());
           isRefreshing = false;
           processQueue(null, newAccessToken); // Resolve all pending requests with the new token
 
