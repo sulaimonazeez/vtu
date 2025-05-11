@@ -53,13 +53,11 @@ const Login = () => {
             });
 
             // Your Django LoginView should return 'access_token' and 'expires_in' (access token's duration in seconds)
-            const { access_token, expires_in, refresh_token} = response.data;
+            const { access_token, expires_in} = response.data;
 
             // Calculate the absolute expiration time in milliseconds
             const expiresAt = Date.now() + expires_in * 1000;
-            if (refresh_token) {
-                alert(refresh_token);
-            }
+            
             // Store the access token and its calculated expiry time in localStorage.
             // The refresh_token is handled by the HttpOnly cookie and is not stored here.
             localStorage.setItem("access_token", access_token);
