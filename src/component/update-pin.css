@@ -1,0 +1,152 @@
+/* update-pin.css */
+
+.update-pin-container {
+    max-width: 500px; /* Max width for the form container */
+    margin: 50px auto; /* Center the container with top/bottom margin */
+    padding: 30px; /* Padding inside the container */
+    border-radius: 10px; /* Slightly rounded corners */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* More pronounced shadow for depth */
+    background-color: #ffffff; /* White background */
+    font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif; /* Modern font stack */
+}
+
+.update-pin-container h2 {
+    text-align: center;
+    margin-bottom: 35px;
+    color: #2c3e50; /* Darker blue for heading */
+    font-weight: 700; /* Bolder heading */
+    letter-spacing: 0.5px;
+}
+
+.form-group label {
+    font-weight: 600; /* Bolder labels */
+    color: #34495e; /* Darker grey for labels */
+    margin-bottom: 8px;
+}
+
+.form-control {
+    border-radius: 6px; /* Slightly more rounded inputs */
+    padding: 12px 18px; /* More padding for inputs */
+    border: 1px solid #dcdfe6; /* Lighter border color */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #007bff; /* Primary blue focus */
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Standard Bootstrap focus shadow */
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    padding: 12px 25px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background-color: #0056b3;
+    border-color: #0056b3;
+    transform: translateY(-2px); /* Subtle lift effect on hover */
+}
+
+.btn-primary:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Modal specific styles (for the result modal) */
+.result-modal .modal-content {
+    border-radius: 10px;
+    overflow: hidden; /* Ensures no content spills over rounded corners */
+}
+
+.result-modal .modal-header-custom.success {
+    background-color: #e6ffed; /* Light green background for success header */
+    border-bottom: 1px solid #c8e6c9;
+}
+
+.result-modal .modal-header-custom.error {
+    background-color: #ffebe6; /* Light red background for error header */
+    border-bottom: 1px solid #ffcdd2;
+}
+
+.result-modal .modal-title {
+    font-weight: 700;
+    color: #343a40;
+}
+
+.result-modal .modal-body {
+    text-align: center;
+    padding: 40px;
+}
+
+.result-modal .status-icon {
+    margin-bottom: 25px;
+}
+
+.result-modal .status-icon i {
+    font-size: 90px; /* Larger icons for impact */
+    display: block;
+    margin: 0 auto;
+    line-height: 1;
+    transition: transform 0.3s ease; /* Smooth transition for pop-in animation */
+}
+
+.result-modal .status-icon.success i {
+    color: #28a745; /* Green for success */
+}
+
+.result-modal .status-icon.error i {
+    color: #dc3545; /* Red for error */
+}
+
+.result-modal .message-text {
+    font-size: 1.15rem; /* Slightly larger message text */
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+.result-modal .modal-footer-custom {
+    border-top: 1px solid #e9ecef;
+    background-color: #f8f9fa;
+    justify-content: center;
+    padding: 15px 20px;
+}
+
+.result-modal .modal-footer-custom .btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.result-modal .modal-footer-custom .btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #5a6268;
+}
+
+
+/* Animation for status icon (Pop-in effect) */
+@keyframes pop-in {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    80% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.result-modal .status-icon i.animated {
+    animation: pop-in 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards; /* Cubic-bezier for a springy feel */
+}
