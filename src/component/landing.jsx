@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 function Landing() {
   const navigate = useNavigate();
   return (
-    <div className="App">
+    <div className="body">
       <div className="landing-container">
         {/* Header Section */}
         <div className="landing-header">
