@@ -199,12 +199,12 @@ const Header = () => {
       </div>
       <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>You're Honoured!</Modal.Title>
+          <Modal.Title>Notification</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h4>Welcome to our website!</h4>
-          <p>We are truly honoured to have you here. Thank you for visiting!</p>
-          <p>Enjoy exploring, and feel free to reach out if you have any questions!</p>
+          <h4>Notification</h4>
+          <p>Default Transaction Pin: 1111</p>
+          <p>Click on Your Profile to update your pin. Thank you!!</p>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
