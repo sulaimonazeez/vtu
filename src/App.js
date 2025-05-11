@@ -9,7 +9,7 @@ import AllTransaction from "./component/allTransaction.jsx";
 import NINSubmission from "./component/verification.jsx";
 import Notifications from "./component/notification.jsx";
 import ProfileWrapper from "./component/profileWrapper.jsx";
-
+import Landing from "./component/landing.jsx";
 // Import the logout utility function that also calls your Django backend.
 // Make sure you have this utility function defined, for example, in src/utils/auth.js
 // as we've outlined in previous steps.
@@ -80,6 +80,7 @@ function App() {
         {/* Public Routes (no authentication required) */}
         <Route path="/login" element={<Login />} />
         <Route path="/create" element={<Signup />} />
+        <Route path="/" element={<Landing />} />
 
         {/* Protected Routes (require authentication via PrivateRoute) */}
         <Route path="/home" element={<PrivateRoute element={<Home />} />} />
