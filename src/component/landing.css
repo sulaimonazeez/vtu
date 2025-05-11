@@ -1,0 +1,146 @@
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #222222;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  flex-direction: column;
+}
+
+.landing-container {
+  text-align: center;
+  max-width: 100%;
+  padding: 20px;
+}
+
+.landing-header {
+  margin-bottom: 30px;
+}
+
+.title {
+  font-size: 2.5rem;
+  color: #FFD700;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: #B0B0B0;
+  margin-top: 10px;
+}
+
+/* Feature Icons Section */
+.feature-icons {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.icon-container {
+  text-align: center;
+  margin: 10px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #333333;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.icon-container i {
+  color: white;
+}
+
+.icon-container p {
+  margin-top: 10px;
+  font-size: 1rem;
+  color: #ddd;
+}
+
+.icon-container:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+/* Animating icons on load with pure CSS */
+@keyframes slideIn {
+  0% {
+    transform: translateX(-100px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.icon-container.airtime {
+  animation: slideIn 1s ease-out forwards;
+}
+
+.icon-container.data {
+  animation: slideIn 1s ease-out 0.3s forwards;
+}
+
+.icon-container.payment {
+  animation: slideIn 1s ease-out 0.6s forwards;
+}
+
+/* CTA Button */
+.cta-button {
+  background-color: #FFD700;
+  color: #222;
+  font-size: 1.2rem;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-top: 30px;
+  transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #FFA500;
+  transform: scale(1.1);
+}
+
+/* Mobile Optimization */
+@media (max-width: 600px) {
+  .title {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+  }
+
+  .cta-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+  }
+
+  .feature-icons {
+    flex-direction: column;
+  }
+
+  .icon-container {
+    width: 100px;
+    height: 100px;
+  }
+}
