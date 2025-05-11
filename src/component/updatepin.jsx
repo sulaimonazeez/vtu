@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Modal } from 'react-bootstrap'; // Assuming you have react-bootstrap installed
 import axiosInstance from './utility'; // Adjust path as needed
 import './update-pin.css'; // We'll create this CSS file
-
+import DownNav from "./downNav";
 const UpdatePin = () => {
     const [oldPin, setOldPin] = useState('');
     const [newPin, setNewPin] = useState('');
@@ -156,6 +156,7 @@ const UpdatePin = () => {
                     <button className="btn btn-secondary" onClick={handleCloseModal}>Close</button>
                 </Modal.Footer>
             </Modal>
+            <DownNav />
         </div>
     );
 };
