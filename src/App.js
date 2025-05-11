@@ -29,7 +29,7 @@ const isAuthenticated = () => {
     // HttpOnly refresh token on the backend and handle redirection.
     if (accessToken && expiresIn && Date.now() >= parseInt(expiresIn)) {
       console.log("Access token expired for route protection. Logging out.");
-      logout(); // This function handles redirection to /login and backend invalidation
+      //logout(); // This function handles redirection to /login and backend invalidation
     } else if (!accessToken) {
       // If there's no access token at all, just clear anything that might be left and redirect.
       // We can call `logout()` here too, as it handles client-side clearing and redirection.
