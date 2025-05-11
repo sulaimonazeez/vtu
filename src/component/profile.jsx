@@ -23,7 +23,7 @@ const Profile = ({user}) => {
             <i className="fa fa-phone"></i> {user.phone || "08080891605"}
           </p>
         </div>
-        <Link className="btn p-2 rounded" style={{textDecoration: "none", backgroundColor:"orange", color: "white", padding: "8px", borderRadius: "2vw"}} to="/pin">Update Pin</Link>
+        <Link className="btn p-2 rounded" style={{textDecoration: "none", backgroundColor:"blue", color: "white", padding: "8px", borderRadius: "2vw", fontWeight:"bold"}} to="/pin">Update Pin</Link>
       </div>
     </div>
       <DownNav />
