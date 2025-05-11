@@ -10,6 +10,7 @@ import NINSubmission from "./component/verification.jsx";
 import Notifications from "./component/notification.jsx";
 import ProfileWrapper from "./component/profileWrapper.jsx";
 import Landing from "./component/landing.jsx";
+import UpdatePin from "./component/updatepin.jsx";
 // Import the logout utility function that also calls your Django backend.
 // Make sure you have this utility function defined, for example, in src/utils/auth.js
 // as we've outlined in previous steps.
@@ -90,6 +91,7 @@ function App() {
         <Route path="/notification" element={<PrivateRoute element={<Notifications />} />} />
         <Route path="/verification" element={<PrivateRoute element={<NINSubmission />} />} />
         <Route path="/history" element={<PrivateRoute element={<AllTransaction />} />} />
+        <Route path="/pin" element={<PrivateRoute element={<UpdatePin />} />} />
 
         {/* Default route: redirect to /home or /login based on auth status */}
         {/* You might want to check isAuthenticated() here before redirecting to /home */}
