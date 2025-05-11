@@ -2,6 +2,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DownNav from "./downNav.jsx";
+import { Link } from "react-router-dom";
 
 const Profile = ({user}) => {
 
@@ -22,6 +23,7 @@ const Profile = ({user}) => {
             <i className="fa fa-phone"></i> {user.phone || "08080891605"}
           </p>
         </div>
+        <Link className="btn p-2 rounded" style={{textDecoration: "none", backgroundColor:"orange", color: "white", padding: "8px", borderRadius: "2vw"}} to="/pin">Update Pin</Link>
       </div>
     </div>
       <DownNav />
