@@ -130,6 +130,7 @@ const Airtime = () => {
                 setModalVisible(false); // Close PIN modal
                 sendData(); // Proceed with airtime purchase
                 setPin(""); // Clear PIN
+                setSubmitting(true);
             } else {
                 setUserMessage(response.data.message || "Incorrect PIN. Please try again.");
                 setPin(""); // Clear PIN for retry
